@@ -49,7 +49,7 @@ function getFilteredSections() {
           if (!a.essential && b.essential) return 1;
           return 0;
         })
-        .map((item) => ({ ...item, domId: 'faq-' + item.id, catIcon: s.icon, catLabel: s.label }));
+        .map((item) => ({ ...item, domId: 'faq-' + item.id }));
       return { id: s.id, icon: s.icon, label: s.label, items };
     })
     .filter((s) => s.items.length > 0);
@@ -108,7 +108,6 @@ function renderFaqItem(item) {
         <div class="faq-item__content">
           ${item.essential ? '<div><span class="faq-item__essential">★ Essencial</span></div>' : ''}
           <span class="faq-item__question">${item.q}</span>
-          <span class="faq-item__category">${item.catIcon} ${item.catLabel}</span>
         </div>
         <span class="faq-item__chevron">›</span>
       </button>
