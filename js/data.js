@@ -16,12 +16,10 @@ const CATEGORIES = [
 ];
 
 const QUICK_LINKS = [
+  { icon: '👤', label: 'WebAluno', href: 'https://ac3949.mannesoftprime.com.br/webaluno/' },
   { icon: '💻', label: 'Plataforma Aula', href: '#' },
-  { icon: '👤', label: 'WebAluno', href: 'https://ac3949.mannesoftprime.com.br/webaluno/index.php' },
-  { icon: '⚙️', label: 'Autoatendimento', href: '#' },
   { icon: '📧', label: 'Webmail', href: '#' },
-  { icon: '📅', label: 'Calendário Acadêmico', href: '#' },
-  { icon: '📖', label: 'Tutorial', href: '#' },
+  { icon: '📅', label: 'Calendário Acadêmico', href: 'https://www.ulbra.br/canoas/espaco-academico/calendario-academico' },
 ];
 
 const ONBOARDING_STEPS = [
@@ -51,13 +49,13 @@ const ONBOARDING_STEPS = [
       { icon: '📲', title: 'Salve no seu celular', text: 'Registre as datas críticas na agenda com lembretes de antecedência — especialmente para as avaliações presenciais.' },
     ],
     note: 'Calendário disponível em: ulbra.br/canoas/espaco-academico/calendario-academico',
+    cta: { label: 'Abrir calendário acadêmico', href: 'https://www.ulbra.br/canoas/espaco-academico/calendario-academico' },
   },
   {
     icon: '💻',
     title: 'Sistemas e calendário',
     bullets: [
       { icon: '📚', title: 'Plataforma Aula', text: 'Onde você assiste aulas, realiza atividades, interage com professores e faz as provas AP1 e AP2.' },
-      { icon: '⚙️', title: 'Autoatendimento', text: 'Rematrícula, solicitações acadêmicas e alterações de dados cadastrais.' },
       { icon: '📆', title: 'Prazos são sua responsabilidade', text: 'No EaD, cumprir os prazos depende de você. Use o calendário acadêmico EaD para organizar o semestre.' },
       { icon: '🔍', title: 'Existe mais de um calendário', text: 'Há calendários para presencial, medicina e EaD. Consulte sempre o calendário EaD.' },
     ],
@@ -65,10 +63,17 @@ const ONBOARDING_STEPS = [
   },
   {
     icon: '📝',
-    title: 'Como funcionam as avaliações',
+    title: 'Como funcionam as avaliações (1/2)',
     bullets: [
       { icon: '🖥️', title: 'AP1 e AP2 — on-line (Plataforma Aula)', text: 'Prova objetiva + atividade prática. AP1 vale 2,0 pts; AP2 vale 3,0 pts.' },
       { icon: '🏫', title: 'AS — presencial no polo', text: 'Avaliação Semestral vale 5,0 pts. Deve ser agendada com antecedência no polo de apoio.' },
+    ],
+    note: null,
+  },
+  {
+    icon: '📝',
+    title: 'Como funcionam as avaliações (2/2)',
+    bullets: [
       { icon: '🔄', title: 'AF — segunda chance presencial', text: 'Para quem ficou abaixo de 6,0 pts. A nota final é a maior entre a PS e a AF.' },
       { icon: '✅', title: 'Aprovação com PS ≥ 6,0', text: 'PS = AP1 + AP2 + AS. Resultado igual ou superior a 6,0 = aprovado!' },
     ],
@@ -76,10 +81,17 @@ const ONBOARDING_STEPS = [
   },
   {
     icon: '🤝',
-    title: 'Comunicação e suporte',
+    title: 'Comunicação e suporte (1/2)',
     bullets: [
       { icon: '✉️', title: 'Crie seu e-mail institucional', text: 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que chegam os comunicados oficiais.' },
       { icon: '📧', title: 'Webmail Institucional', text: 'Comunicados oficiais chegam exclusivamente por aqui. Acesse com regularidade!' },
+    ],
+    note: null,
+  },
+  {
+    icon: '🤝',
+    title: 'Comunicação e suporte (2/2)',
+    bullets: [
       { icon: '🏫', title: 'Polo de apoio presencial', text: 'Primeiro ponto de contato para dúvidas, provas e suporte local. Guarde o contato do seu polo!' },
       { icon: '👩‍🏫', title: 'Professores e tutores', text: 'Tire dúvidas de conteúdo pelos fóruns e mensagens na Plataforma Aula.' },
     ],
@@ -124,8 +136,6 @@ const SEARCH_SYNONYMS = [
   ['senha', 'login', 'esqueci a senha'],
 ];
 
-const POPULAR_QUESTIONS = ['va12', 'av10', 'va4', 'va10', 'te7', 'pl1'];
-
 const FAQ_DATA = [
   {
     id: 'vida-academica', icon: '🎓', label: 'Vida Acadêmica',
@@ -140,7 +150,7 @@ const FAQ_DATA = [
       { id: 'va7', q: 'Como acessar meu e-mail institucional?', essential: true, a: 'O e-mail institucional pode ser acessado pelo Espaço Acadêmico ou pelo WebAluno, onde também estão disponíveis os demais sistemas acadêmicos.\n\nVerifique o e-mail regularmente — comunicados oficiais, avisos sobre avaliações e informações do curso são enviados exclusivamente por esse canal.', system: 'Espaço Acadêmico / WebAluno', related: ['va12', 'va8'] },
       { id: 'va8', q: 'Por que devo consultar meu e-mail institucional regularmente?', a: 'Comunicados oficiais, avisos sobre avaliações e informações do curso são enviados exclusivamente ao e-mail institucional. Deixar de acompanhá-lo pode fazer você perder prazos e informações importantes.', related: ['va7'] },
       { id: 'va9', q: 'Onde encontro as informações oficiais do meu curso?', a: 'As informações oficiais estão no Espaço Acadêmico, no WebAluno, na plataforma Aula e no portal da ULBRA. Consulte também o Manual do Aluno EaD.', system: 'Espaço Acadêmico / WebAluno / Plataforma Aula' },
-      { id: 'va10', q: 'Como fazer a rematrícula?', essential: true, a: 'A rematrícula é realizada semestralmente pelo Autoatendimento. Observe o calendário acadêmico e realize a matrícula nas disciplinas conforme a sequência prevista no seu curso, dentro do prazo estipulado.', system: 'Autoatendimento', related: ['va4'] },
+      { id: 'va10', q: 'Como fazer a rematrícula?', essential: true, a: 'A rematrícula é realizada semestralmente pelo WebAluno. Observe o calendário acadêmico e realize a matrícula nas disciplinas conforme a sequência prevista no seu curso, dentro do prazo estipulado.', system: 'WebAluno', related: ['va4'] },
       { id: 'va11', q: 'O que são os créditos das disciplinas?', a: 'Créditos representam a carga horária de cada disciplina. Cada crédito equivale a uma determinada quantidade de horas de estudo. Consulte a grade curricular do seu curso no WebAluno para mais detalhes.' },
       { id: 'va12', q: 'Como faço meu primeiro acesso ao WebAluno e crio meu e-mail institucional?', essential: true, a: 'Siga os passos abaixo para fazer seu primeiro acesso e criar seu e-mail institucional:', steps: ['Acesse o WebAluno em https://ac3949.mannesoftprime.com.br/webaluno/index.php.', 'Use seu CPF como usuário.', 'Use sua data de nascimento no formato ddmmaa como senha. Exemplo: nascido em 01/02/2000 → senha inicial 010200.', 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos.', 'Use esse e-mail institucional para acessar o Webmail e receber os comunicados oficiais.'], system: 'WebAluno', related: ['va7', 'pl1', 'te1'] },
     ],
@@ -152,7 +162,7 @@ const FAQ_DATA = [
       { id: 'pl2', q: 'Como ativar todas as notificações da plataforma Aula?', a: 'Acesse as configurações do seu perfil na plataforma Aula e habilite todas as notificações por e-mail e push. Assim você será avisado sobre novas atividades, avisos de professores e prazos importantes.', system: 'Plataforma Aula' },
       { id: 'pl4', q: 'Por que não recebo avisos das disciplinas?', a: 'Verifique se as notificações estão ativadas na plataforma Aula e se o e-mail institucional no sistema está correto. Caso o problema persista, entre em contato com a Central de Relacionamento EaD.', system: 'Plataforma Aula / Central de Relacionamento EaD' },
       { id: 'pl3', q: 'Quais canais de comunicação devo acompanhar?', a: 'Acompanhe regularmente: a plataforma Aula (fóruns, avisos e mensagens das disciplinas), o e-mail institucional e as notificações do WebAluno.' },
-      { id: 'pl5', q: 'Como alterar meu e-mail ou telefone de contato?', a: 'Essa alteração é realizada pelo sistema de Autoatendimento da ULBRA. Acesse com seus dados de aluno e atualize as informações na seção de dados pessoais.', system: 'Autoatendimento' },
+      { id: 'pl5', q: 'Como alterar meu e-mail ou telefone de contato?', a: 'Essa alteração é realizada pelo WebAluno. Acesse com seus dados de aluno e atualize as informações na seção de dados pessoais.', system: 'WebAluno' },
     ],
   },
   {
@@ -191,7 +201,7 @@ const FAQ_DATA = [
   {
     id: 'financeiro', icon: '💰', label: 'Financeiro',
     items: [
-      { id: 'fi1', q: 'Como emitir boleto, negociar pagamentos ou consultar bolsas e Imposto de Renda?', a: 'Questões financeiras — emissão de boleto, segunda via, negociação de pagamentos, bolsas de estudo e informações para Imposto de Renda — são tratadas pelo Autoatendimento ou diretamente com a Central de Relacionamento ao Aluno EaD.', system: 'Autoatendimento / Central de Relacionamento EaD' },
+      { id: 'fi1', q: 'Como emitir boleto, negociar pagamentos ou consultar bolsas e Imposto de Renda?', a: 'Questões financeiras — emissão de boleto, segunda via, negociação de pagamentos, bolsas de estudo e informações para Imposto de Renda — devem ser tratadas diretamente com a Central de Relacionamento EaD.', system: 'Central de Relacionamento EaD' },
     ],
   },
   {
@@ -226,7 +236,7 @@ const FAQ_DATA = [
   {
     id: 'formatura', icon: '🏆', label: 'Formatura',
     items: [
-      { id: 'fo1', q: 'Quando posso solicitar a colação de grau?', a: 'Após integralizar todos os créditos e requisitos do curso, incluindo atividades complementares e TCC (quando exigido). A solicitação é feita pelo Autoatendimento, dentro dos prazos do calendário acadêmico.', system: 'Autoatendimento', related: ['fo2', 'fo3'] },
+      { id: 'fo1', q: 'Quando posso solicitar a colação de grau?', a: 'Após integralizar todos os créditos e requisitos do curso, incluindo atividades complementares e TCC (quando exigido). A solicitação deve ser feita junto à Central de Relacionamento EaD, dentro dos prazos do calendário acadêmico.', system: 'Central de Relacionamento EaD', related: ['fo2', 'fo3'] },
       { id: 'fo2', q: 'Quais são os requisitos para me formar?', a: 'É necessário cumprir todas as disciplinas obrigatórias e eletivas, atividades complementares, estágio (quando exigido), TCC (quando aplicável) e demais requisitos do projeto pedagógico do seu curso.', related: ['fo1', 'fo3'] },
       { id: 'fo3', q: 'Como funciona a cerimônia de formatura?', a: 'A ULBRA realiza cerimônias de colação de grau ao final de cada semestre. As informações sobre datas, locais e procedimentos são divulgadas pelo e-mail institucional e no Espaço Acadêmico com antecedência.', system: 'Espaço Acadêmico', related: ['fo1'] },
     ],
