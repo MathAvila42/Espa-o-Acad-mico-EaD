@@ -280,13 +280,22 @@ main { padding-top: 64px; }
   border-radius: 12px;
   color: white;
   transition: background 0.15s;
+  min-width: 0;
 }
 
 .quick-link:hover { background: rgba(255, 255, 255, 0.14); }
 
-.quick-link__icon { font-size: 20px; }
+.quick-link__icon { font-size: 20px; flex-shrink: 0; }
 
-.quick-link__label { font-size: 14px; font-weight: 500; flex: 1; }
+.quick-link__label {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .quick-link__arrow { color: #cca269; font-size: 15px; }
 
@@ -342,13 +351,20 @@ main { padding-top: 64px; }
 .faq-category__header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #d8e8e6;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #045a52;
 }
 
-.faq-category__icon { font-size: 20px; }
+.faq-category__icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: #e2eeec;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
 
 .faq-category__title {
   font-size: 17px;
@@ -423,19 +439,6 @@ main { padding-top: 64px; }
   line-height: 1.45;
   display: block;
   text-wrap: pretty;
-}
-
-.faq-item__category {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #eaf1f0;
-  color: #3d6562;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 2px 9px;
-  border-radius: 20px;
-  margin-top: 6px;
 }
 
 .faq-item__chevron {
@@ -737,6 +740,37 @@ main { padding-top: 64px; }
 
 @media (max-width: 520px) {
   .hero__title { font-size: 32px; }
-  .quick-links { grid-template-columns: repeat(2, 1fr); }
+
+  .quick-links { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+  .quick-link { padding: 12px 10px; gap: 8px; }
+
+  .quick-link__icon { font-size: 17px; }
+
+  .quick-link__label { font-size: 12.5px; }
+
+  .quick-link__arrow { font-size: 13px; }
+
+  .pills-wrap { padding-top: 22px; }
+
+  .pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -24px;
+    padding: 0 24px 4px;
+    scrollbar-width: none;
+  }
+
+  .pills::-webkit-scrollbar { display: none; }
+
+  .pill { flex-shrink: 0; }
+
+  .faq-category__header { gap: 10px; }
+
+  .faq-category__icon { width: 32px; height: 32px; font-size: 16px; }
+
+  .faq-category__title { font-size: 15px; }
+
   .modal { width: 100%; height: 100%; max-height: calc(100vh - 40px); border-radius: 16px; }
 }
