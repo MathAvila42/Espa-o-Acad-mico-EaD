@@ -113,7 +113,6 @@ let highlightedItem = null;
 let showSuggestions = false;
 let onboardingOpen = false;
 let onboardingStep = 0;
-let scrollDebounceTimer = null;
 
 function getFilteredSections() {
   const rawQuery = searchQuery.trim();
@@ -345,14 +344,6 @@ searchInput.addEventListener('input', (e) => {
   renderPills();
   renderFaqArea();
   renderSuggestions();
-
-  clearTimeout(scrollDebounceTimer);
-  if (normalizeStr(searchQuery.trim()).length >= 2) {
-    scrollDebounceTimer = setTimeout(() => {
-      const el = document.getElementById('faq-sections');
-      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 100, behavior: 'smooth' });
-    }, 150);
-  }
 });
 
 searchInput.addEventListener('focus', () => {
