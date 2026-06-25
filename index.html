@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Dúvidas EaD · ULBRA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <img class="header__logo" src="assets/logo.png" alt="ULBRA">
+  <div class="header__divider"></div>
+  <div class="header__titles">
+    <div class="header__title">Central de Dúvidas EaD</div>
+    <div class="header__subtitle">Espaço Acadêmico · Educação a Distância</div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <div class="hero__eyebrow">Central de Dúvidas</div>
+      <h1 class="hero__title">Encontre a resposta<br>que você precisa</h1>
+      <p class="hero__subtitle">Respostas claras para alunos EaD ULBRA</p>
+      <div class="search">
+        <span class="search__icon">🔍</span>
+        <input type="text" id="search-input" class="search__input" placeholder="Pesquise sua dúvida aqui..." autocomplete="off">
+        <div class="search__suggestions" id="search-suggestions" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="intro__inner">
+      <div class="intro__eyebrow"><span>✦</span><span>Novo por aqui?</span></div>
+      <h2 class="intro__title">Seja bem-vindo à ULBRA EaD</h2>
+      <p class="intro__text">Acesse os sistemas e confira as dúvidas mais importantes de quem está começando.</p>
+
+      <button class="guide-card" id="open-onboarding" type="button">
+        <div class="guide-card__row">
+          <div class="guide-card__icon">🚀</div>
+          <div class="guide-card__body">
+            <div class="guide-card__title">Guia do Novo Aluno EaD</div>
+            <div class="guide-card__desc">Passe por 6 passos rápidos e saiba tudo que precisa para começar bem no EaD ULBRA</div>
+          </div>
+          <div class="guide-card__arrow"><span></span></div>
+        </div>
+      </button>
+
+      <p class="intro__quick-label">Acesso rápido</p>
+      <div class="quick-links" id="quick-links"></div>
+    </div>
+  </section>
+
+  <div class="faq-area">
+    <div class="container pills-wrap">
+      <div class="pills" id="category-pills"></div>
+    </div>
+
+    <div class="container result-count-wrap" id="result-count-wrap" hidden>
+      <span class="result-count" id="result-count"></span>
+    </div>
+
+    <div class="container faq-sections" id="faq-sections"></div>
+
+    <div class="no-results" id="no-results" hidden>
+      <div class="no-results__icon">🔍</div>
+      <h3 class="no-results__title">Nenhuma pergunta encontrada</h3>
+      <p class="no-results__text">Tente outros termos ou entre em contato com a Central de Relacionamento EaD.</p>
+    </div>
+  </div>
+
+</main>
+
+<div class="modal-overlay" id="onboarding-overlay" hidden>
+  <div class="modal" id="onboarding-modal" role="dialog" aria-modal="true">
+
+    <div class="modal__header">
+      <button class="modal__close" id="close-onboarding" type="button" aria-label="Fechar">✕</button>
+      <div class="modal__heading">
+        <div class="modal__icon" id="onboarding-icon"></div>
+        <div>
+          <div class="modal__step-label" id="onboarding-step-label"></div>
+          <h3 class="modal__title" id="onboarding-title"></h3>
+        </div>
+      </div>
+      <div class="modal__progress">
+        <div class="modal__progress-fill" id="onboarding-progress"></div>
+      </div>
+    </div>
+
+    <div class="modal__body" id="onboarding-body"></div>
+
+    <div class="modal__footer">
+      <div class="modal__dots" id="onboarding-dots"></div>
+      <div class="modal__nav">
+        <button class="btn btn--ghost" id="onboarding-prev" type="button">← Anterior</button>
+        <button class="btn btn--primary" id="onboarding-next" type="button">Próximo →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div class="footer__col">
+        <div class="footer__logo-row">
+          <img class="footer__logo" src="assets/logo.png" alt="ULBRA">
+          <div class="footer__logo-caption">Educação a Distância</div>
+        </div>
+        <p class="footer__address">Universidade Luterana do Brasil<br>Canoas, Rio Grande do Sul</p>
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Sistemas</p>
+        <div class="footer__links">
+          <a href="#">WebAluno</a>
+          <a href="#">Plataforma Aula</a>
+          <a href="#">Autoatendimento</a>
+          <a href="#">Webmail Institucional</a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Precisa de ajuda?</p>
+        <p class="footer__help-text">Central de Relacionamento ao Aluno EaD ou polo de apoio presencial.</p>
+        <a class="footer__cta" href="#">Falar com Central ›</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copyright">© 2025 ULBRA – Universidade Luterana do Brasil. Todos os direitos reservados.</p>
+      <div class="footer__legal">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
