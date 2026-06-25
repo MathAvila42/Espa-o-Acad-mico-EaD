@@ -29,7 +29,7 @@ const onboardingPrevBtn = document.getElementById('onboarding-prev');
 const onboardingNextBtn = document.getElementById('onboarding-next');
 
 let activeCategory = 'all';
-let openItemId = null;
+let openItemIds = new Set();
 let searchQuery = '';
 let highlightedItem = null;
 let showSuggestions = false;
@@ -72,16 +72,19 @@ function getSuggestions() {
 
 function renderPills() {
   categoryPillsEl.innerHTML = CATEGORIES.map((cat) => `
-    <button class="pill${cat.id === activeCategory ? ' is-active' : ''}" data-id="${cat.id}" type="button">
+    <button class="pill${cat.id === activeCategory ? ' is-active' : ''}" data-id="${cat.id}" type="button" aria-pressed="${cat.id === activeCategory}">
       <span>${cat.icon}</span><span>${cat.label}</span>
     </button>
   `).join('');
   categoryPillsEl.querySelectorAll('.pill').forEach((btn) => {
     btn.addEventListener('click', () => {
       activeCategory = btn.dataset.id;
-      openItemId = null;
+      openItemIds = new Set();
+      searchQuery = '';
+      searchInput.value = '';
       renderPills();
       renderFaqArea();
+      renderSuggestions();
     });
   });
 }
@@ -97,21 +100,21 @@ function renderQuickLinks() {
 }
 
 function renderFaqItem(item) {
-  const isOpen = openItemId === item.id;
+  const isOpen = openItemIds.has(item.id);
   const isHighlighted = highlightedItem === item.id;
   const classes = ['faq-item'];
   if (isOpen) classes.push('is-open');
   if (isHighlighted) classes.push('is-highlighted');
   return `
     <div class="${classes.join(' ')}" id="${item.domId}">
-      <button class="faq-item__toggle" data-id="${item.id}" type="button">
+      <button class="faq-item__toggle" data-id="${item.id}" type="button" aria-expanded="${isOpen}" aria-controls="${item.domId}-answer">
         <div class="faq-item__content">
           ${item.essential ? '<div><span class="faq-item__essential">★ Essencial</span></div>' : ''}
           <span class="faq-item__question">${item.q}</span>
         </div>
         <span class="faq-item__chevron">›</span>
       </button>
-      <div class="faq-item__answer"><p>${item.a}</p></div>
+      <div class="faq-item__answer" id="${item.domId}-answer"><p>${item.a}</p></div>
     </div>
   `;
 }
@@ -133,7 +136,11 @@ function attachFaqItemListeners() {
   faqSectionsEl.querySelectorAll('.faq-item__toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
-      openItemId = openItemId === id ? null : id;
+      if (openItemIds.has(id)) {
+        openItemIds.delete(id);
+      } else {
+        openItemIds.add(id);
+      }
       renderFaqArea();
     });
   });
@@ -164,7 +171,7 @@ function renderSuggestions() {
     return;
   }
   searchSuggestions.innerHTML = suggestions.map((sug) => `
-    <button class="suggestion" data-id="${sug.id}" data-cat="${sug.catId}" type="button">
+    <button class="suggestion" data-id="${sug.id}" data-cat="${sug.catId}" type="button" role="option">
       <span class="suggestion__icon">${sug.catIcon}</span>
       <div class="suggestion__body">
         <div class="suggestion__question">${sug.q}</div>
@@ -183,7 +190,7 @@ function renderSuggestions() {
 
 function goToQuestion(id, catId) {
   activeCategory = catId;
-  openItemId = id;
+  openItemIds = new Set([id]);
   highlightedItem = id;
   searchQuery = '';
   searchInput.value = '';
@@ -238,7 +245,7 @@ searchInput.addEventListener('keydown', (e) => {
   const firstItem = sections[0] && sections[0].items[0];
   if (!firstItem) return;
 
-  openItemId = firstItem.id;
+  openItemIds = new Set([firstItem.id]);
   highlightedItem = firstItem.id;
   renderFaqArea();
 
@@ -281,7 +288,7 @@ function renderOnboarding() {
   onboardingBodyEl.innerHTML = bulletsHtml + noteHtml + '<div class="modal__spacer"></div>';
 
   onboardingDotsEl.innerHTML = ONBOARDING_STEPS.map((_, i) => `
-    <button class="dot${i === onboardingStep ? ' is-active' : ''}" data-step="${i}" type="button"></button>
+    <button class="dot${i === onboardingStep ? ' is-active' : ''}" data-step="${i}" type="button" aria-current="${i === onboardingStep ? 'step' : 'false'}" aria-label="Ir para o passo ${i + 1}"></button>
   `).join('');
   onboardingDotsEl.querySelectorAll('.dot').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -317,6 +324,8 @@ onboardingPrevBtn.addEventListener('click', () => {
 onboardingNextBtn.addEventListener('click', () => {
   const stepCount = ONBOARDING_STEPS.length;
   if (onboardingStep === stepCount - 1) {
+    localStorage.setItem('onboarding-completed', '1');
+    applyOnboardingCompletedBadge();
     closeOnboarding();
   } else {
     onboardingStep = Math.min(stepCount - 1, onboardingStep + 1);
@@ -324,12 +333,41 @@ onboardingNextBtn.addEventListener('click', () => {
   }
 });
 
+function applyOnboardingCompletedBadge() {
+  const titleEl = document.querySelector('.guide-card__title');
+  if (!titleEl) return;
+  const hasBadge = titleEl.querySelector('.guide-card__badge');
+  if (localStorage.getItem('onboarding-completed') === '1' && !hasBadge) {
+    titleEl.insertAdjacentHTML('beforeend', ' <span class="guide-card__badge">✓ Concluído</span>');
+  }
+}
+applyOnboardingCompletedBadge();
+
 onboardingOverlayEl.addEventListener('click', (e) => {
   if (e.target === onboardingOverlayEl) closeOnboarding();
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && onboardingOpen) closeOnboarding();
+  if (e.key === 'Escape' && onboardingOpen) {
+    closeOnboarding();
+    return;
+  }
+  if (e.key === 'Escape' && document.activeElement === searchInput && searchQuery) {
+    searchQuery = '';
+    searchInput.value = '';
+    activeCategory = 'all';
+    renderPills();
+    renderFaqArea();
+    renderSuggestions();
+    return;
+  }
+  if (e.key === '/' && !onboardingOpen) {
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  }
 });
 
 renderQuickLinks();
