@@ -9,6 +9,83 @@ function normalizeStr(str) {
     .replace(/ñ/g, 'n');
 }
 
+function singularizeWord(word) {
+  return word.length > 4 && word.endsWith('s') ? word.slice(0, -1) : word;
+}
+
+function expandQueryTerms(query) {
+  const q = normalizeStr(query.trim());
+  if (!q) return [];
+  const terms = new Map();
+  const addTerm = (term, exact) => {
+    if (!terms.has(term) || exact) terms.set(term, exact);
+  };
+
+  addTerm(q, false);
+
+  const singular = singularizeWord(q);
+  if (singular !== q) addTerm(singular, false);
+  if (!q.endsWith('s')) addTerm(q + 's', false);
+
+  for (const group of SEARCH_SYNONYMS) {
+    const matched = group.some((term) => (term.length <= 3 ? q === term : q.indexOf(term) !== -1));
+    if (matched) group.forEach((term) => addTerm(term, term.length <= 3));
+  }
+
+  return Array.from(terms, ([term, exact]) => ({ term, exact }));
+}
+
+function termMatchesText(entry, text) {
+  if (!text) return false;
+  const normalized = normalizeStr(text);
+  if (entry.exact) {
+    return new RegExp('(^|[^a-z0-9])' + entry.term + '($|[^a-z0-9])').test(normalized);
+  }
+  return normalized.indexOf(entry.term) !== -1;
+}
+
+function levenshtein(a, b) {
+  const m = a.length;
+  const n = b.length;
+  const dp = [];
+  for (let i = 0; i <= m; i++) dp.push(new Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function fuzzyWordMatch(queryWord, text) {
+  if (!text) return false;
+  const maxDist = queryWord.length <= 4 ? 1 : 2;
+  const words = normalizeStr(text).split(/[^a-z0-9]+/).filter(Boolean);
+  return words.some((w) => Math.abs(w.length - queryWord.length) <= maxDist && levenshtein(queryWord, w) <= maxDist);
+}
+
+function matchesTerms(item, terms) {
+  return terms.some((entry) => termMatchesText(entry, item.q) || termMatchesText(entry, item.a));
+}
+
+function matchesFuzzy(item, rawQuery) {
+  const qWords = normalizeStr(rawQuery).split(/[^a-z0-9]+/).filter((w) => w.length >= 3);
+  if (!qWords.length) return false;
+  return qWords.every((qw) => fuzzyWordMatch(qw, item.q) || fuzzyWordMatch(qw, item.a));
+}
+
+function findFaqItemById(id) {
+  for (const s of FAQ_DATA) {
+    const item = s.items.find((it) => it.id === id);
+    if (item) return { item, catId: s.id };
+  }
+  return null;
+}
+
 const searchInput = document.getElementById('search-input');
 const searchSuggestions = document.getElementById('search-suggestions');
 const categoryPillsEl = document.getElementById('category-pills');
@@ -17,6 +94,7 @@ const resultCountEl = document.getElementById('result-count');
 const faqSectionsEl = document.getElementById('faq-sections');
 const noResultsEl = document.getElementById('no-results');
 const quickLinksEl = document.getElementById('quick-links');
+const popularQuestionsEl = document.getElementById('popular-questions');
 
 const onboardingOverlayEl = document.getElementById('onboarding-overlay');
 const onboardingIconEl = document.getElementById('onboarding-icon');
@@ -38,12 +116,15 @@ let onboardingStep = 0;
 let scrollDebounceTimer = null;
 
 function getFilteredSections() {
-  const q = normalizeStr(searchQuery.trim());
+  const rawQuery = searchQuery.trim();
+  const terms = expandQueryTerms(rawQuery);
+  const useFuzzy = terms.length > 0 && !FAQ_DATA.some((s) => s.items.some((item) => matchesTerms(item, terms)));
+
   return FAQ_DATA
     .filter((s) => activeCategory === 'all' || s.id === activeCategory)
     .map((s) => {
       const items = s.items
-        .filter((item) => !q || normalizeStr(item.q).indexOf(q) !== -1 || (item.a && normalizeStr(item.a).indexOf(q) !== -1))
+        .filter((item) => !terms.length || matchesTerms(item, terms) || (useFuzzy && matchesFuzzy(item, rawQuery)))
         .sort((a, b) => {
           if (a.essential && !b.essential) return -1;
           if (!a.essential && b.essential) return 1;
@@ -56,18 +137,26 @@ function getFilteredSections() {
 }
 
 function getSuggestions() {
-  const q = normalizeStr(searchQuery.trim());
+  const rawQuery = searchQuery.trim();
+  const terms = expandQueryTerms(rawQuery);
+  if (!terms.length) return [];
+
+  const toSuggestion = (item, s) => ({ id: item.id, catId: s.id, q: item.q, catLabel: s.label, catIcon: s.icon, essential: !!item.essential });
+
   const results = [];
-  if (!q) return results;
   for (const s of FAQ_DATA) {
     for (const item of s.items) {
-      if (results.length >= 8) return results;
-      if (normalizeStr(item.q).indexOf(q) !== -1 || (item.a && normalizeStr(item.a).indexOf(q) !== -1)) {
-        results.push({ id: item.id, catId: s.id, q: item.q, catLabel: s.label, catIcon: s.icon, essential: !!item.essential });
+      if (matchesTerms(item, terms)) results.push(toSuggestion(item, s));
+    }
+  }
+  if (!results.length) {
+    for (const s of FAQ_DATA) {
+      for (const item of s.items) {
+        if (matchesFuzzy(item, rawQuery)) results.push(toSuggestion(item, s));
       }
     }
   }
-  return results;
+  return results.slice(0, 8);
 }
 
 function renderPills() {
@@ -99,12 +188,46 @@ function renderQuickLinks() {
   `).join('');
 }
 
+function renderPopularQuestions() {
+  if (!popularQuestionsEl) return;
+  const refs = POPULAR_QUESTIONS.map(findFaqItemById).filter(Boolean);
+
+  popularQuestionsEl.innerHTML = `
+    <div class="popular__label">🔥 Mais procurados</div>
+    <div class="popular__chips">
+      ${refs.map(({ item, catId }) => `
+        <button class="popular__chip" data-id="${item.id}" data-cat="${catId}" type="button">${item.q}</button>
+      `).join('')}
+    </div>
+  `;
+  popularQuestionsEl.querySelectorAll('.popular__chip').forEach((btn) => {
+    btn.addEventListener('click', () => goToQuestion(btn.dataset.id, btn.dataset.cat));
+  });
+}
+
 function renderFaqItem(item) {
   const isOpen = openItemIds.has(item.id);
   const isHighlighted = highlightedItem === item.id;
   const classes = ['faq-item'];
   if (isOpen) classes.push('is-open');
   if (isHighlighted) classes.push('is-highlighted');
+
+  const stepsHtml = item.steps
+    ? `<ol class="faq-item__steps">${item.steps.map((step) => `<li>${step}</li>`).join('')}</ol>`
+    : '';
+
+  const relatedRefs = (item.related || []).map(findFaqItemById).filter(Boolean);
+  const relatedHtml = relatedRefs.length
+    ? `<div class="faq-item__related">
+        <div class="faq-item__related-label">Veja também</div>
+        ${relatedRefs.map(({ item: ri, catId }) => `<button class="faq-item__related-link" data-id="${ri.id}" data-cat="${catId}" type="button">${ri.q}</button>`).join('')}
+      </div>`
+    : '';
+
+  const systemHtml = item.system
+    ? `<div class="faq-item__system"><span class="faq-item__system-icon">📍</span> Onde resolver: <strong>${item.system}</strong></div>`
+    : '';
+
   return `
     <div class="${classes.join(' ')}" id="${item.domId}">
       <button class="faq-item__toggle" data-id="${item.id}" type="button" aria-expanded="${isOpen}" aria-controls="${item.domId}-answer">
@@ -114,7 +237,7 @@ function renderFaqItem(item) {
         </div>
         <span class="faq-item__chevron">›</span>
       </button>
-      <div class="faq-item__answer" id="${item.domId}-answer"><p>${item.a}</p></div>
+      <div class="faq-item__answer" id="${item.domId}-answer"><p>${item.a}</p>${stepsHtml}${relatedHtml}${systemHtml}</div>
     </div>
   `;
 }
@@ -142,6 +265,11 @@ function attachFaqItemListeners() {
         openItemIds.add(id);
       }
       renderFaqArea();
+    });
+  });
+  faqSectionsEl.querySelectorAll('.faq-item__related-link').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      goToQuestion(btn.dataset.id, btn.dataset.cat);
     });
   });
 }
@@ -371,5 +499,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 renderQuickLinks();
+renderPopularQuestions();
 renderPills();
 renderFaqArea();
