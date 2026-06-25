@@ -16,7 +16,7 @@ const CATEGORIES = [
 
 const QUICK_LINKS = [
   { icon: '💻', label: 'Plataforma Aula', href: '#' },
-  { icon: '👤', label: 'WebAluno', href: '#' },
+  { icon: '👤', label: 'WebAluno', href: 'https://ac3949.mannesoftprime.com.br/webaluno/index.php' },
   { icon: '⚙️', label: 'Autoatendimento', href: '#' },
   { icon: '📧', label: 'Webmail', href: '#' },
   { icon: '📅', label: 'Calendário Acadêmico', href: '#' },
@@ -39,6 +39,8 @@ const ONBOARDING_STEPS = [
     title: 'Seus sistemas essenciais',
     bullets: [
       { icon: '👤', title: 'WebAluno', text: 'Portal principal: matrícula, notas, dados do curso e acesso aos demais sistemas.' },
+      { icon: '🔑', title: 'Primeiro acesso', text: 'No WebAluno, use seu CPF como usuário e sua data de nascimento (ddmmaa) como senha. Exemplo: nascido em 01/02/2000 → senha inicial 010200.' },
+      { icon: '✉️', title: 'Crie seu e-mail institucional', text: 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que chegam os comunicados oficiais.' },
       { icon: '📚', title: 'Plataforma Aula', text: 'Onde você assiste aulas, realiza atividades, interage com professores e faz as provas AP1 e AP2.' },
       { icon: '⚙️', title: 'Autoatendimento', text: 'Rematrícula, solicitações acadêmicas e alterações de dados cadastrais.' },
       { icon: '📧', title: 'Webmail Institucional', text: 'Comunicados oficiais chegam exclusivamente por aqui. Acesse com regularidade!' },
@@ -71,9 +73,9 @@ const ONBOARDING_STEPS = [
     title: 'De onde vem o suporte',
     bullets: [
       { icon: '🏫', title: 'Polo de apoio presencial', text: 'Primeiro ponto de contato para dúvidas, provas e suporte local. Guarde o contato do seu polo!' },
-      { icon: '📞', title: 'Central de Relacionamento EaD', text: 'Para dúvidas não resolvidas no polo, problemas técnicos e solicitações acadêmicas.' },
+      { icon: '📞', title: 'Central de Relacionamento EaD', text: 'Para dúvidas não resolvidas no polo, problemas técnicos e solicitações acadêmicas: (51) 99274-1192 (ligação ou WhatsApp) ou relac.canoas@ulbra.br.' },
       { icon: '👩‍🏫', title: 'Professores e tutores', text: 'Tire dúvidas de conteúdo pelos fóruns e mensagens na Plataforma Aula.' },
-      { icon: '🎓', title: 'Coordenação do curso', text: 'Para grade, aproveitamento de disciplinas e orientações específicas do seu curso.' },
+      { icon: '🎓', title: 'Coordenação do curso', text: 'Para grade, aproveitamento de disciplinas e orientações específicas, consulte os contatos da coordenação do seu curso no site da ULBRA.' },
     ],
     note: 'Nunca fique com dúvida! Use os canais certos para resolver logo.',
   },
@@ -106,6 +108,7 @@ const FAQ_DATA = [
       { id: 'va9', q: 'Onde encontro as informações oficiais do meu curso?', a: 'As informações oficiais estão no Espaço Acadêmico, no WebAluno, na plataforma Aula e no portal da ULBRA. Consulte também o Manual do Aluno EaD.' },
       { id: 'va10', q: 'Como fazer a rematrícula?', essential: true, a: 'A rematrícula é realizada semestralmente pelo Autoatendimento. Observe o calendário acadêmico e realize a matrícula nas disciplinas conforme a sequência prevista no seu curso, dentro do prazo estipulado.' },
       { id: 'va11', q: 'O que são os créditos das disciplinas?', a: 'Créditos representam a carga horária de cada disciplina. Cada crédito equivale a uma determinada quantidade de horas de estudo. Consulte a grade curricular do seu curso no WebAluno para mais detalhes.' },
+      { id: 'va12', q: 'Como faço meu primeiro acesso ao WebAluno e crio meu e-mail institucional?', essential: true, a: 'Acesse o WebAluno em https://ac3949.mannesoftprime.com.br/webaluno/index.php usando seu CPF como usuário e sua data de nascimento no formato ddmmaa como senha.\n\nExemplo: para um aluno nascido em 01 de fevereiro de 2000, a senha inicial seria 010200.\n\nNo ambiente WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que você acessará o Webmail e receberá os comunicados oficiais.' },
     ],
   },
   {
@@ -197,6 +200,7 @@ const FAQ_DATA = [
       { id: 'te4', q: 'O sistema apresentou erro durante a avaliação. O que devo fazer?', a: 'Faça prints da tela com o erro, registre a data e o horário exatos. Entre em contato imediatamente com a Central de Relacionamento EaD ou polo de apoio, apresentando os registros do problema.' },
       { id: 'te5', q: 'Com quem falo quando tenho um problema técnico?', a: 'Problemas de acesso ou suporte técnico podem ser encaminhados à Central de Relacionamento ao Aluno EaD ou ao polo de apoio presencial, por e-mail, telefone ou presencialmente.' },
       { id: 'te6', q: 'Como comprovar um problema ocorrido durante uma prova?', a: 'Tire prints da tela com o erro, registre data e horário e entre em contato com o polo ou Central EaD o mais rápido possível. Quanto antes você reportar, melhor será a análise do caso.' },
+      { id: 'te7', q: 'Qual o telefone e e-mail da Central de Relacionamento EaD?', essential: true, a: 'Você pode falar com a Central de Relacionamento ao Aluno EaD pelo telefone (51) 99274-1192 (ligação ou WhatsApp) ou pelo e-mail relac.canoas@ulbra.br.\n\nPara questões acadêmicas específicas do seu curso, consulte os contatos da coordenação do curso no site da ULBRA.' },
     ],
   },
 ];
