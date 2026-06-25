@@ -31,32 +31,37 @@ const ONBOARDING_STEPS = [
     bullets: [
       { icon: '🏫', title: 'Modalidade 100% on-line', text: 'Você estuda no seu ritmo, de onde quiser. Aulas, materiais e atividades estão disponíveis 24h na Plataforma Aula.' },
       { icon: '📍', title: 'Polo de apoio presencial', text: 'Você está vinculado a um polo onde realizará as avaliações presenciais. Anote o endereço e os contatos do seu polo.' },
-      { icon: '📆', title: 'Prazos são sua responsabilidade', text: 'No EaD, cumprir os prazos depende de você. Use o calendário acadêmico EaD para organizar o semestre.' },
     ],
     note: 'Esta Central de Dúvidas reúne as respostas mais importantes do EaD ULBRA. Volte aqui sempre que precisar!',
   },
   {
-    icon: '💻',
-    title: 'Seus sistemas essenciais',
+    icon: '👤',
+    title: 'WebAluno: seu portal principal',
     bullets: [
       { icon: '👤', title: 'WebAluno', text: 'Portal principal: matrícula, notas, dados do curso e acesso aos demais sistemas.' },
       { icon: '🔑', title: 'Primeiro acesso', text: 'No WebAluno, use seu CPF como usuário e sua data de nascimento (ddmmaa) como senha. Exemplo: nascido em 01/02/2000 → senha inicial 010200.' },
-      { icon: '✉️', title: 'Crie seu e-mail institucional', text: 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que chegam os comunicados oficiais.' },
-      { icon: '📚', title: 'Plataforma Aula', text: 'Onde você assiste aulas, realiza atividades, interage com professores e faz as provas AP1 e AP2.' },
-      { icon: '⚙️', title: 'Autoatendimento', text: 'Rematrícula, solicitações acadêmicas e alterações de dados cadastrais.' },
-      { icon: '📧', title: 'Webmail Institucional', text: 'Comunicados oficiais chegam exclusivamente por aqui. Acesse com regularidade!' },
     ],
     note: 'Todos os sistemas são acessados pelo Espaço Acadêmico no site da ULBRA (Já sou aluno).',
   },
   {
     icon: '📅',
-    title: 'O calendário acadêmico EaD',
+    title: 'Datas que você precisa marcar',
     bullets: [
-      { icon: '🔍', title: 'Existe mais de um calendário', text: 'Há calendários para presencial, medicina e EaD. Consulte sempre o calendário EaD.' },
       { icon: '📌', title: 'Datas que você precisa marcar', text: 'Início e fim das aulas, períodos das AP1 e AP2, Avaliação Semestral (AS), Avaliação Final (AF) e prazo de rematrícula.' },
       { icon: '📲', title: 'Salve no seu celular', text: 'Registre as datas críticas na agenda com lembretes de antecedência — especialmente para as avaliações presenciais.' },
     ],
     note: 'Calendário disponível em: ulbra.br/canoas/espaco-academico/calendario-academico',
+  },
+  {
+    icon: '💻',
+    title: 'Sistemas e calendário',
+    bullets: [
+      { icon: '📚', title: 'Plataforma Aula', text: 'Onde você assiste aulas, realiza atividades, interage com professores e faz as provas AP1 e AP2.' },
+      { icon: '⚙️', title: 'Autoatendimento', text: 'Rematrícula, solicitações acadêmicas e alterações de dados cadastrais.' },
+      { icon: '📆', title: 'Prazos são sua responsabilidade', text: 'No EaD, cumprir os prazos depende de você. Use o calendário acadêmico EaD para organizar o semestre.' },
+      { icon: '🔍', title: 'Existe mais de um calendário', text: 'Há calendários para presencial, medicina e EaD. Consulte sempre o calendário EaD.' },
+    ],
+    note: null,
   },
   {
     icon: '📝',
@@ -71,22 +76,38 @@ const ONBOARDING_STEPS = [
   },
   {
     icon: '🤝',
-    title: 'De onde vem o suporte',
+    title: 'Comunicação e suporte',
     bullets: [
+      { icon: '✉️', title: 'Crie seu e-mail institucional', text: 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que chegam os comunicados oficiais.' },
+      { icon: '📧', title: 'Webmail Institucional', text: 'Comunicados oficiais chegam exclusivamente por aqui. Acesse com regularidade!' },
       { icon: '🏫', title: 'Polo de apoio presencial', text: 'Primeiro ponto de contato para dúvidas, provas e suporte local. Guarde o contato do seu polo!' },
-      { icon: '📞', title: 'Central de Relacionamento EaD', text: 'Para dúvidas não resolvidas no polo, problemas técnicos e solicitações acadêmicas: (51) 99274-1192 (ligação ou WhatsApp) ou relac.canoas@ulbra.br.' },
       { icon: '👩‍🏫', title: 'Professores e tutores', text: 'Tire dúvidas de conteúdo pelos fóruns e mensagens na Plataforma Aula.' },
+    ],
+    note: null,
+  },
+  {
+    icon: '📞',
+    title: 'Quando precisar de mais ajuda',
+    bullets: [
+      { icon: '📞', title: 'Central de Relacionamento EaD', text: 'Para dúvidas não resolvidas no polo, problemas técnicos e solicitações acadêmicas: (51) 99274-1192 (ligação ou WhatsApp) ou relac.canoas@ulbra.br.' },
       { icon: '🎓', title: 'Coordenação do curso', text: 'Para grade, aproveitamento de disciplinas e orientações específicas, consulte os contatos da coordenação do seu curso no site da ULBRA.' },
     ],
     note: 'Nunca fique com dúvida! Use os canais certos para resolver logo.',
   },
   {
     icon: '✅',
-    title: 'Checklist: seus primeiros passos',
+    title: 'Checklist: seus primeiros passos (1/2)',
     bullets: [
       { icon: '1️⃣', title: 'Acesse o WebAluno', text: 'Confirme seus dados, curso e polo de apoio.' },
       { icon: '2️⃣', title: 'Entre na Plataforma Aula', text: 'Conheça suas disciplinas e ative todas as notificações.' },
       { icon: '3️⃣', title: 'Consulte o calendário EaD', text: 'Marque as datas das avaliações na sua agenda agora!' },
+    ],
+    note: null,
+  },
+  {
+    icon: '✅',
+    title: 'Checklist: seus primeiros passos (2/2)',
+    bullets: [
       { icon: '4️⃣', title: 'Configure o Webmail', text: 'Acesse o e-mail institucional e ative os alertas de novas mensagens.' },
       { icon: '5️⃣', title: 'Anote o contato do polo', text: 'Salve o telefone e e-mail do seu polo de apoio presencial.' },
     ],
