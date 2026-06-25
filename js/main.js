@@ -94,7 +94,6 @@ const resultCountEl = document.getElementById('result-count');
 const faqSectionsEl = document.getElementById('faq-sections');
 const noResultsEl = document.getElementById('no-results');
 const quickLinksEl = document.getElementById('quick-links');
-const popularQuestionsEl = document.getElementById('popular-questions');
 
 const onboardingOverlayEl = document.getElementById('onboarding-overlay');
 const onboardingIconEl = document.getElementById('onboarding-icon');
@@ -185,23 +184,6 @@ function renderQuickLinks() {
       <span class="quick-link__arrow">›</span>
     </a>
   `).join('');
-}
-
-function renderPopularQuestions() {
-  if (!popularQuestionsEl) return;
-  const refs = POPULAR_QUESTIONS.map(findFaqItemById).filter(Boolean);
-
-  popularQuestionsEl.innerHTML = `
-    <div class="popular__label">🔥 Mais procurados</div>
-    <div class="popular__chips">
-      ${refs.map(({ item, catId }) => `
-        <button class="popular__chip" data-id="${item.id}" data-cat="${catId}" type="button">${item.q}</button>
-      `).join('')}
-    </div>
-  `;
-  popularQuestionsEl.querySelectorAll('.popular__chip').forEach((btn) => {
-    btn.addEventListener('click', () => goToQuestion(btn.dataset.id, btn.dataset.cat));
-  });
 }
 
 function renderFaqItem(item) {
@@ -404,7 +386,10 @@ function renderOnboarding() {
       <p class="modal__note-text">${step.note}</p>
     </div>
   ` : '';
-  onboardingBodyEl.innerHTML = bulletsHtml + noteHtml + '<div class="modal__spacer"></div>';
+  const ctaHtml = step.cta ? `
+    <a class="modal__cta" href="${step.cta.href}" target="_blank" rel="noopener">${step.cta.label} ↗</a>
+  ` : '';
+  onboardingBodyEl.innerHTML = bulletsHtml + noteHtml + ctaHtml + '<div class="modal__spacer"></div>';
 
   onboardingDotsEl.innerHTML = ONBOARDING_STEPS.map((_, i) => `
     <button class="dot${i === onboardingStep ? ' is-active' : ''}" data-step="${i}" type="button" aria-current="${i === onboardingStep ? 'step' : 'false'}" aria-label="Ir para o passo ${i + 1}"></button>
@@ -443,24 +428,13 @@ onboardingPrevBtn.addEventListener('click', () => {
 onboardingNextBtn.addEventListener('click', () => {
   const stepCount = ONBOARDING_STEPS.length;
   if (onboardingStep === stepCount - 1) {
-    localStorage.setItem('onboarding-completed', '1');
-    applyOnboardingCompletedBadge();
+    window.open('https://ac3949.mannesoftprime.com.br/webaluno/', '_blank');
     closeOnboarding();
   } else {
     onboardingStep = Math.min(stepCount - 1, onboardingStep + 1);
     renderOnboarding();
   }
 });
-
-function applyOnboardingCompletedBadge() {
-  const titleEl = document.querySelector('.guide-card__title');
-  if (!titleEl) return;
-  const hasBadge = titleEl.querySelector('.guide-card__badge');
-  if (localStorage.getItem('onboarding-completed') === '1' && !hasBadge) {
-    titleEl.insertAdjacentHTML('beforeend', ' <span class="guide-card__badge">✓ Concluído</span>');
-  }
-}
-applyOnboardingCompletedBadge();
 
 onboardingOverlayEl.addEventListener('click', (e) => {
   if (e.target === onboardingOverlayEl) closeOnboarding();
@@ -490,6 +464,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 renderQuickLinks();
-renderPopularQuestions();
 renderPills();
 renderFaqArea();
