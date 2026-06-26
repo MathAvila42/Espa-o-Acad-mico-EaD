@@ -54,8 +54,20 @@
         </div>
       </button>
 
+      <button class="assistant-card" id="open-assistant" type="button">
+        <div class="assistant-card__icon">🧭</div>
+        <div class="assistant-card__body">
+          <div class="assistant-card__title">Não sabe por onde começar?</div>
+          <div class="assistant-card__desc">Responda 1 ou 2 perguntas rápidas e te levamos direto à resposta certa</div>
+        </div>
+        <div class="assistant-card__arrow">›</div>
+      </button>
+
       <p class="intro__quick-label">Acesso rápido</p>
       <div class="quick-links" id="quick-links"></div>
+
+      <p class="intro__quick-label">Ou veja por etapa da sua jornada</p>
+      <div class="journey-stages" id="journey-stages"></div>
     </div>
   </section>
 
@@ -105,6 +117,25 @@
         <button class="btn btn--primary" id="onboarding-next" type="button">Próximo →</button>
       </div>
     </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="assistant-overlay" hidden>
+  <div class="modal modal--assistant" id="assistant-modal" role="dialog" aria-modal="true">
+
+    <div class="modal__header">
+      <button class="modal__close" id="close-assistant" type="button" aria-label="Fechar">✕</button>
+      <div class="modal__heading">
+        <div class="modal__icon">🧭</div>
+        <div>
+          <div class="modal__step-label">Assistente de Dúvidas</div>
+          <h3 class="modal__title" id="assistant-title"></h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__body" id="assistant-body"></div>
 
   </div>
 </div>
