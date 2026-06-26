@@ -127,46 +127,6 @@ const ONBOARDING_STEPS = [
   },
 ];
 
-const DECISION_TREE = {
-  root: {
-    question: 'O que você precisa fazer agora?',
-    options: [
-      { label: '🆕 Sou novo(a) e quero me orientar', action: 'onboarding' },
-      { label: '🔑 Não consigo acessar algum sistema', next: 'acesso' },
-      { label: '📝 Tenho dúvida sobre provas, notas ou AF', next: 'avaliacoes' },
-      { label: '💰 Preciso falar sobre boleto, bolsa ou pagamento', result: ['fi1'] },
-      { label: '📅 Preciso saber sobre datas, calendário ou rematrícula', next: 'datas' },
-      { label: '🆘 Quero falar direto com alguém da ULBRA', result: ['te7', 'te5'] },
-    ],
-  },
-  acesso: {
-    question: 'Qual sistema você está tentando acessar?',
-    options: [
-      { label: 'WebAluno / Espaço Acadêmico', result: ['va12', 'te1'] },
-      { label: 'Plataforma Aula', result: ['pl1', 'te2'] },
-      { label: 'E-mail institucional / Webmail', result: ['va7', 'pl5'] },
-      { label: 'Esqueci minha senha', result: ['te1'] },
-    ],
-  },
-  avaliacoes: {
-    question: 'O que você precisa saber sobre as avaliações?',
-    options: [
-      { label: 'Como funcionam AP1, AP2, AS e AF', result: ['av1', 'av2'] },
-      { label: 'Como é calculada minha média', result: ['av9', 'av10'] },
-      { label: 'Perdi uma prova ou fiquei com nota baixa', result: ['av6', 'av9'] },
-      { label: 'Tive um problema técnico durante a prova', result: ['te3', 'te4', 'te6'] },
-    ],
-  },
-  datas: {
-    question: 'Sobre o que você quer saber?',
-    options: [
-      { label: 'Calendário acadêmico', result: ['va4', 'va5'] },
-      { label: 'Rematrícula', result: ['va10'] },
-      { label: 'Colação de grau / formatura', result: ['fo1', 'fo2'] },
-    ],
-  },
-};
-
 const SEARCH_SYNONYMS = [
   ['ava', 'ambiente virtual de aprendizagem', 'aula', 'plataforma aula'],
   ['af', 'avaliacao final', 'recuperacao', 'segunda chamada', 'perdi a prova', 'faltei na prova', 'nao fiz a prova', 'esqueci da prova'],
