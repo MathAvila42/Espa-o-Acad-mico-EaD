@@ -18,11 +18,9 @@ a { text-decoration: none; color: inherit; }
 .quick-link:focus-visible,
 .guide-card:focus-visible,
 .assistant-card:focus-visible,
-.journey-card:focus-visible,
 .assistant-option:focus-visible,
 .assistant-result:focus-visible,
 .assistant-nav__link:focus-visible,
-.result-count__clear:focus-visible,
 .btn:focus-visible,
 .dot:focus-visible,
 .suggestion:focus-visible,
@@ -325,7 +323,7 @@ main { padding-top: 64px; }
   margin-bottom: 12px;
 }
 
-.quick-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 28px; }
+.quick-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 
 .quick-link {
   display: flex;
@@ -355,35 +353,6 @@ main { padding-top: 64px; }
 }
 
 .quick-link__arrow { color: #cca269; font-size: 15px; }
-
-.journey-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-
-.journey-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.journey-card:hover { background: rgba(255, 255, 255, 0.14); }
-
-.journey-card.is-active {
-  background: rgba(204, 162, 105, 0.16);
-  border-color: rgba(204, 162, 105, 0.45);
-}
-
-.journey-card__icon { font-size: 19px; }
-
-.journey-card__label { font-size: 12.5px; font-weight: 600; line-height: 1.35; }
 
 /* ---------- FAQ AREA ---------- */
 
@@ -428,18 +397,6 @@ main { padding-top: 64px; }
   border-radius: 20px;
   border: 1px solid #d4e0df;
   display: inline-block;
-}
-
-.result-count__clear {
-  margin-left: 10px;
-  background: none;
-  border: none;
-  color: #045a52;
-  font-weight: 700;
-  font-size: 12.5px;
-  cursor: pointer;
-  font-family: inherit;
-  text-decoration: underline;
 }
 
 .faq-sections { margin-top: 26px; }
@@ -1018,14 +975,6 @@ main { padding-top: 64px; }
   .assistant-card__title { font-size: 13px; }
 
   .assistant-card__desc { font-size: 12px; }
-
-  .journey-stages { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-
-  .journey-card { padding: 11px 12px; }
-
-  .journey-card__icon { font-size: 17px; }
-
-  .journey-card__label { font-size: 12px; }
 
   .pills-wrap { padding-top: 22px; }
 
