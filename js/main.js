@@ -94,6 +94,11 @@ const resultCountEl = document.getElementById('result-count');
 const faqSectionsEl = document.getElementById('faq-sections');
 const noResultsEl = document.getElementById('no-results');
 const quickLinksEl = document.getElementById('quick-links');
+const journeyStagesEl = document.getElementById('journey-stages');
+
+const assistantOverlayEl = document.getElementById('assistant-overlay');
+const assistantTitleEl = document.getElementById('assistant-title');
+const assistantBodyEl = document.getElementById('assistant-body');
 
 const onboardingOverlayEl = document.getElementById('onboarding-overlay');
 const onboardingIconEl = document.getElementById('onboarding-icon');
@@ -106,14 +111,34 @@ const onboardingPrevBtn = document.getElementById('onboarding-prev');
 const onboardingNextBtn = document.getElementById('onboarding-next');
 
 let activeCategory = 'all';
+let activeJourney = null;
 let openItemIds = new Set();
 let searchQuery = '';
 let highlightedItem = null;
 let showSuggestions = false;
 let onboardingOpen = false;
 let onboardingStep = 0;
+let assistantOpen = false;
+let assistantNodeId = 'root';
+let assistantHistory = [];
+let assistantResultIds = null;
+
+function getJourneySection() {
+  const stage = JOURNEY_STAGES.find((j) => j.id === activeJourney);
+  if (!stage) return null;
+  const items = stage.itemIds
+    .map(findFaqItemById)
+    .filter(Boolean)
+    .map(({ item }) => ({ ...item, domId: 'faq-' + item.id }));
+  return { id: 'journey-' + stage.id, icon: stage.icon, label: stage.label, items };
+}
 
 function getFilteredSections() {
+  if (activeJourney) {
+    const section = getJourneySection();
+    return section && section.items.length ? [section] : [];
+  }
+
   const rawQuery = searchQuery.trim();
   const terms = expandQueryTerms(rawQuery);
   const useFuzzy = terms.length > 0 && !FAQ_DATA.some((s) => s.items.some((item) => matchesTerms(item, terms)));
@@ -166,9 +191,11 @@ function renderPills() {
   categoryPillsEl.querySelectorAll('.pill').forEach((btn) => {
     btn.addEventListener('click', () => {
       activeCategory = btn.dataset.id;
+      activeJourney = null;
       openItemIds = new Set();
       searchQuery = '';
       searchInput.value = '';
+      renderJourneyStages();
       renderPills();
       renderFaqArea();
       renderSuggestions();
@@ -184,6 +211,36 @@ function renderQuickLinks() {
       <span class="quick-link__arrow">›</span>
     </a>
   `).join('');
+}
+
+function renderJourneyStages() {
+  journeyStagesEl.innerHTML = JOURNEY_STAGES.map((stage) => `
+    <button class="journey-card${stage.id === activeJourney ? ' is-active' : ''}" data-id="${stage.id}" type="button" aria-pressed="${stage.id === activeJourney}">
+      <span class="journey-card__icon">${stage.icon}</span>
+      <span class="journey-card__label">${stage.label}</span>
+    </button>
+  `).join('');
+  journeyStagesEl.querySelectorAll('.journey-card').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      activeJourney = activeJourney === id ? null : id;
+      activeCategory = 'all';
+      openItemIds = new Set();
+      searchQuery = '';
+      searchInput.value = '';
+
+      renderJourneyStages();
+      renderPills();
+      renderFaqArea();
+      renderSuggestions();
+
+      if (activeJourney) {
+        setTimeout(() => {
+          faqSectionsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
+      }
+    });
+  });
 }
 
 function renderFaqItem(item) {
@@ -258,17 +315,29 @@ function attachFaqItemListeners() {
 function renderFaqArea() {
   const q = searchQuery.trim();
   const hasSearch = normalizeStr(q).length > 0;
+  const journeyStage = activeJourney ? JOURNEY_STAGES.find((j) => j.id === activeJourney) : null;
   const sections = getFilteredSections();
   const totalCount = sections.reduce((n, s) => n + s.items.length, 0);
 
-  resultCountWrap.hidden = !hasSearch;
-  if (hasSearch) {
+  resultCountWrap.hidden = !hasSearch && !journeyStage;
+  if (journeyStage) {
+    resultCountEl.innerHTML = `Etapa: <strong>${journeyStage.icon} ${journeyStage.label}</strong> · ${totalCount} pergunta${totalCount !== 1 ? 's' : ''} <button class="result-count__clear" id="clear-journey" type="button">✕ Ver todas as categorias</button>`;
+  } else if (hasSearch) {
     resultCountEl.textContent = `${totalCount} resultado${totalCount !== 1 ? 's' : ''} para "${q}"`;
   }
 
   noResultsEl.hidden = sections.length !== 0;
   faqSectionsEl.innerHTML = sections.map(renderFaqCategory).join('');
   attachFaqItemListeners();
+
+  const clearJourneyBtn = document.getElementById('clear-journey');
+  if (clearJourneyBtn) {
+    clearJourneyBtn.addEventListener('click', () => {
+      activeJourney = null;
+      renderJourneyStages();
+      renderFaqArea();
+    });
+  }
 }
 
 function renderSuggestions() {
@@ -299,11 +368,13 @@ function renderSuggestions() {
 
 function goToQuestion(id, catId) {
   activeCategory = catId;
+  activeJourney = null;
   openItemIds = new Set([id]);
   highlightedItem = id;
   searchQuery = '';
   searchInput.value = '';
 
+  renderJourneyStages();
   renderPills();
   renderFaqArea();
   renderSuggestions();
@@ -322,6 +393,10 @@ function goToQuestion(id, catId) {
 searchInput.addEventListener('input', (e) => {
   searchQuery = e.target.value;
   activeCategory = 'all';
+  if (activeJourney) {
+    activeJourney = null;
+    renderJourneyStages();
+  }
 
   renderPills();
   renderFaqArea();
@@ -440,9 +515,116 @@ onboardingOverlayEl.addEventListener('click', (e) => {
   if (e.target === onboardingOverlayEl) closeOnboarding();
 });
 
+function resetAssistantState() {
+  assistantNodeId = 'root';
+  assistantHistory = [];
+  assistantResultIds = null;
+}
+
+function renderAssistantNav(canGoBack, canRestart) {
+  if (!canGoBack && !canRestart) return '';
+  return `
+    <div class="assistant-nav">
+      ${canGoBack ? '<button class="assistant-nav__link" id="assistant-back" type="button">← Voltar</button>' : '<span></span>'}
+      ${canRestart ? '<button class="assistant-nav__link" id="assistant-restart" type="button">🔁 Recomeçar</button>' : ''}
+    </div>
+  `;
+}
+
+function renderAssistant() {
+  const node = DECISION_TREE[assistantNodeId] || DECISION_TREE.root;
+  const canGoBack = assistantResultIds !== null || assistantHistory.length > 0;
+  const canRestart = assistantNodeId !== 'root' || assistantResultIds !== null || assistantHistory.length > 0;
+
+  if (assistantResultIds) {
+    assistantTitleEl.textContent = 'Aqui está o que encontramos';
+    const refs = assistantResultIds.map(findFaqItemById).filter(Boolean);
+    const listHtml = refs.map(({ item, catId }) => `
+      <button class="assistant-result" data-id="${item.id}" data-cat="${catId}" type="button">
+        <span class="assistant-result__q">${item.q}</span>
+        <span class="assistant-result__arrow">›</span>
+      </button>
+    `).join('');
+    assistantBodyEl.innerHTML = `<div class="assistant-results">${listHtml}</div>${renderAssistantNav(canGoBack, canRestart)}`;
+    assistantBodyEl.querySelectorAll('.assistant-result').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        closeAssistant();
+        goToQuestion(btn.dataset.id, btn.dataset.cat);
+      });
+    });
+  } else {
+    assistantTitleEl.textContent = node.question;
+    const optionsHtml = node.options.map((opt, i) => `
+      <button class="assistant-option" data-index="${i}" type="button">
+        <span>${opt.label}</span><span class="assistant-option__arrow">›</span>
+      </button>
+    `).join('');
+    assistantBodyEl.innerHTML = `<div class="assistant-options">${optionsHtml}</div>${renderAssistantNav(canGoBack, canRestart)}`;
+    assistantBodyEl.querySelectorAll('.assistant-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const opt = node.options[Number(btn.dataset.index)];
+        if (opt.action === 'onboarding') {
+          closeAssistant();
+          resetAssistantState();
+          openOnboarding();
+        } else if (opt.next) {
+          assistantHistory.push(assistantNodeId);
+          assistantNodeId = opt.next;
+          renderAssistant();
+        } else if (opt.result) {
+          assistantResultIds = opt.result;
+          renderAssistant();
+        }
+      });
+    });
+  }
+
+  const backBtn = document.getElementById('assistant-back');
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      if (assistantResultIds) {
+        assistantResultIds = null;
+      } else if (assistantHistory.length) {
+        assistantNodeId = assistantHistory.pop();
+      }
+      renderAssistant();
+    });
+  }
+  const restartBtn = document.getElementById('assistant-restart');
+  if (restartBtn) {
+    restartBtn.addEventListener('click', () => {
+      resetAssistantState();
+      renderAssistant();
+    });
+  }
+}
+
+function openAssistant() {
+  assistantOpen = true;
+  resetAssistantState();
+  assistantOverlayEl.hidden = false;
+  renderAssistant();
+}
+
+function closeAssistant() {
+  assistantOpen = false;
+  assistantOverlayEl.hidden = true;
+}
+
+document.getElementById('open-assistant').addEventListener('click', openAssistant);
+document.getElementById('close-assistant').addEventListener('click', closeAssistant);
+
+assistantOverlayEl.addEventListener('click', (e) => {
+  if (e.target === assistantOverlayEl) closeAssistant();
+});
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && onboardingOpen) {
     closeOnboarding();
+    return;
+  }
+  if (e.key === 'Escape' && assistantOpen) {
+    closeAssistant();
     return;
   }
   if (e.key === 'Escape' && document.activeElement === searchInput && searchQuery) {
@@ -464,5 +646,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 renderQuickLinks();
+renderJourneyStages();
 renderPills();
 renderFaqArea();
