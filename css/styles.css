@@ -17,10 +17,6 @@ a { text-decoration: none; color: inherit; }
 .faq-item__toggle:focus-visible,
 .quick-link:focus-visible,
 .guide-card:focus-visible,
-.assistant-card:focus-visible,
-.assistant-option:focus-visible,
-.assistant-result:focus-visible,
-.assistant-nav__link:focus-visible,
 .btn:focus-visible,
 .dot:focus-visible,
 .suggestion:focus-visible,
@@ -276,43 +272,6 @@ main { padding-top: 64px; }
   transform: rotate(45deg);
   margin-left: -2px;
 }
-
-.assistant-card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  max-width: 600px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 14px;
-  padding: 14px 18px;
-  margin-bottom: 28px;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  transition: background 0.15s, transform 0.2s ease;
-}
-
-.assistant-card:hover { background: rgba(255, 255, 255, 0.13); transform: translateY(-1px); }
-
-.assistant-card__icon {
-  width: 40px; height: 40px;
-  background: rgba(204, 162, 105, 0.16);
-  border: 1px solid rgba(204, 162, 105, 0.3);
-  border-radius: 11px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 19px;
-  flex-shrink: 0;
-}
-
-.assistant-card__body { flex: 1; min-width: 0; }
-
-.assistant-card__title { color: white; font-size: 14px; font-weight: 700; line-height: 1.3; margin-bottom: 3px; }
-
-.assistant-card__desc { color: rgba(255, 255, 255, 0.6); font-size: 12.5px; line-height: 1.5; }
-
-.assistant-card__arrow { color: #cca269; font-size: 20px; flex-shrink: 0; }
 
 .intro__quick-label {
   color: rgba(255, 255, 255, 0.6);
@@ -737,64 +696,6 @@ main { padding-top: 64px; }
 
 .modal__spacer { height: 20px; }
 
-.modal--assistant { height: auto; max-height: calc(100vh - 40px); }
-
-.modal--assistant .modal__body { padding: 4px 28px 24px; }
-
-.assistant-options, .assistant-results {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 14px 0 4px;
-}
-
-.assistant-option, .assistant-result {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  background: #f4f9f8;
-  border: 1px solid #dce8e6;
-  border-radius: 10px;
-  padding: 13px 16px;
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #0d3634;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.assistant-option:hover, .assistant-result:hover { background: #e9f3f1; border-color: #cfe0de; }
-
-.assistant-option__arrow, .assistant-result__arrow { color: #045a52; font-size: 16px; flex-shrink: 0; }
-
-.assistant-result__q { flex: 1; min-width: 0; }
-
-.assistant-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid #eef2f2;
-}
-
-.assistant-nav__link {
-  background: none;
-  border: none;
-  color: #5a7a78;
-  font-size: 12.5px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-  padding: 4px 0;
-}
-
-.assistant-nav__link:hover { color: #045a52; }
-
 .modal__footer {
   padding: 16px 28px 22px;
   border-top: 1px solid #eef2f2;
@@ -968,14 +869,6 @@ main { padding-top: 64px; }
 
   .quick-link__arrow { font-size: 13px; }
 
-  .assistant-card { padding: 12px 14px; gap: 10px; }
-
-  .assistant-card__icon { width: 34px; height: 34px; font-size: 16px; }
-
-  .assistant-card__title { font-size: 13px; }
-
-  .assistant-card__desc { font-size: 12px; }
-
   .pills-wrap { padding-top: 22px; }
 
   .faq-category__header { gap: 10px; }
@@ -985,10 +878,6 @@ main { padding-top: 64px; }
   .faq-category__title { font-size: 15px; }
 
   .modal { width: 100%; height: 554px; max-height: calc(100vh - 40px); border-radius: 16px; }
-
-  .modal--assistant { height: auto; max-height: calc(100vh - 40px); }
-
-  .assistant-option, .assistant-result { padding: 12px 14px; font-size: 13px; }
 
   .modal__footer { justify-content: center; padding: 10px 20px 14px; }
 
