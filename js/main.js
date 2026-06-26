@@ -95,10 +95,6 @@ const faqSectionsEl = document.getElementById('faq-sections');
 const noResultsEl = document.getElementById('no-results');
 const quickLinksEl = document.getElementById('quick-links');
 
-const assistantOverlayEl = document.getElementById('assistant-overlay');
-const assistantTitleEl = document.getElementById('assistant-title');
-const assistantBodyEl = document.getElementById('assistant-body');
-
 const onboardingOverlayEl = document.getElementById('onboarding-overlay');
 const onboardingIconEl = document.getElementById('onboarding-icon');
 const onboardingStepLabelEl = document.getElementById('onboarding-step-label');
@@ -116,10 +112,6 @@ let highlightedItem = null;
 let showSuggestions = false;
 let onboardingOpen = false;
 let onboardingStep = 0;
-let assistantOpen = false;
-let assistantNodeId = 'root';
-let assistantHistory = [];
-let assistantResultIds = null;
 
 function getFilteredSections() {
   const rawQuery = searchQuery.trim();
@@ -448,116 +440,9 @@ onboardingOverlayEl.addEventListener('click', (e) => {
   if (e.target === onboardingOverlayEl) closeOnboarding();
 });
 
-function resetAssistantState() {
-  assistantNodeId = 'root';
-  assistantHistory = [];
-  assistantResultIds = null;
-}
-
-function renderAssistantNav(canGoBack, canRestart) {
-  if (!canGoBack && !canRestart) return '';
-  return `
-    <div class="assistant-nav">
-      ${canGoBack ? '<button class="assistant-nav__link" id="assistant-back" type="button">← Voltar</button>' : '<span></span>'}
-      ${canRestart ? '<button class="assistant-nav__link" id="assistant-restart" type="button">🔁 Recomeçar</button>' : ''}
-    </div>
-  `;
-}
-
-function renderAssistant() {
-  const node = DECISION_TREE[assistantNodeId] || DECISION_TREE.root;
-  const canGoBack = assistantResultIds !== null || assistantHistory.length > 0;
-  const canRestart = assistantNodeId !== 'root' || assistantResultIds !== null || assistantHistory.length > 0;
-
-  if (assistantResultIds) {
-    assistantTitleEl.textContent = 'Aqui está o que encontramos';
-    const refs = assistantResultIds.map(findFaqItemById).filter(Boolean);
-    const listHtml = refs.map(({ item, catId }) => `
-      <button class="assistant-result" data-id="${item.id}" data-cat="${catId}" type="button">
-        <span class="assistant-result__q">${item.q}</span>
-        <span class="assistant-result__arrow">›</span>
-      </button>
-    `).join('');
-    assistantBodyEl.innerHTML = `<div class="assistant-results">${listHtml}</div>${renderAssistantNav(canGoBack, canRestart)}`;
-    assistantBodyEl.querySelectorAll('.assistant-result').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        closeAssistant();
-        goToQuestion(btn.dataset.id, btn.dataset.cat);
-      });
-    });
-  } else {
-    assistantTitleEl.textContent = node.question;
-    const optionsHtml = node.options.map((opt, i) => `
-      <button class="assistant-option" data-index="${i}" type="button">
-        <span>${opt.label}</span><span class="assistant-option__arrow">›</span>
-      </button>
-    `).join('');
-    assistantBodyEl.innerHTML = `<div class="assistant-options">${optionsHtml}</div>${renderAssistantNav(canGoBack, canRestart)}`;
-    assistantBodyEl.querySelectorAll('.assistant-option').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const opt = node.options[Number(btn.dataset.index)];
-        if (opt.action === 'onboarding') {
-          closeAssistant();
-          resetAssistantState();
-          openOnboarding();
-        } else if (opt.next) {
-          assistantHistory.push(assistantNodeId);
-          assistantNodeId = opt.next;
-          renderAssistant();
-        } else if (opt.result) {
-          assistantResultIds = opt.result;
-          renderAssistant();
-        }
-      });
-    });
-  }
-
-  const backBtn = document.getElementById('assistant-back');
-  if (backBtn) {
-    backBtn.addEventListener('click', () => {
-      if (assistantResultIds) {
-        assistantResultIds = null;
-      } else if (assistantHistory.length) {
-        assistantNodeId = assistantHistory.pop();
-      }
-      renderAssistant();
-    });
-  }
-  const restartBtn = document.getElementById('assistant-restart');
-  if (restartBtn) {
-    restartBtn.addEventListener('click', () => {
-      resetAssistantState();
-      renderAssistant();
-    });
-  }
-}
-
-function openAssistant() {
-  assistantOpen = true;
-  resetAssistantState();
-  assistantOverlayEl.hidden = false;
-  renderAssistant();
-}
-
-function closeAssistant() {
-  assistantOpen = false;
-  assistantOverlayEl.hidden = true;
-}
-
-document.getElementById('open-assistant').addEventListener('click', openAssistant);
-document.getElementById('close-assistant').addEventListener('click', closeAssistant);
-
-assistantOverlayEl.addEventListener('click', (e) => {
-  if (e.target === assistantOverlayEl) closeAssistant();
-});
-
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && onboardingOpen) {
     closeOnboarding();
-    return;
-  }
-  if (e.key === 'Escape' && assistantOpen) {
-    closeAssistant();
     return;
   }
   if (e.key === 'Escape' && document.activeElement === searchInput && searchQuery) {
