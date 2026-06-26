@@ -127,15 +127,6 @@ const ONBOARDING_STEPS = [
   },
 ];
 
-const JOURNEY_STAGES = [
-  { id: 'antes-de-comecar', icon: '🚀', label: 'Antes de começar', itemIds: ['va12', 'va7', 'va4', 'te1'] },
-  { id: 'primeiras-semanas', icon: '💻', label: 'Primeiras semanas', itemIds: ['pl1', 'va13', 'di3', 'cu3'] },
-  { id: 'provas-e-avaliacoes', icon: '📝', label: 'Provas e avaliações', itemIds: ['av1', 'av2', 'av9', 'av10', 'av6'] },
-  { id: 'rematricula-e-financeiro', icon: '💰', label: 'Rematrícula e financeiro', itemIds: ['va10', 'fi1'] },
-  { id: 'quando-precisar-de-ajuda', icon: '🆘', label: 'Quando precisar de ajuda', itemIds: ['te5', 'te7', 'pl4', 'te2'] },
-  { id: 'caminho-para-formatura', icon: '🏆', label: 'Caminho para a formatura', itemIds: ['po1', 'po2', 'fo2', 'fo1'] },
-];
-
 const DECISION_TREE = {
   root: {
     question: 'O que você precisa fazer agora?',
