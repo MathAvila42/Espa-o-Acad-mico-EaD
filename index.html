@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=4">
+<link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
 
@@ -29,15 +29,11 @@
       <div class="hero__eyebrow">Central de Dúvidas</div>
       <h1 class="hero__title">Encontre a resposta<br>que você precisa</h1>
       <p class="hero__subtitle">Respostas claras para alunos EaD ULBRA</p>
-      <div class="search">
-        <span class="search__icon">🔍</span>
-        <input type="text" id="search-input" class="search__input" placeholder="Digite sua dúvida (ex.: AVA, boleto, calendário, matrícula...)" autocomplete="off" aria-label="Pesquisar perguntas frequentes">
-        <div class="search__suggestions" id="search-suggestions" role="listbox" hidden></div>
-      </div>
+      <div class="stage-blocks" id="stage-blocks"></div>
     </div>
   </section>
 
-  <section class="intro">
+  <section class="intro intro--highlight">
     <div class="intro__inner">
       <div class="intro__eyebrow">Novo por aqui?</div>
       <h2 class="intro__title">Seja bem-vindo à ULBRA EaD</h2>
@@ -60,6 +56,14 @@
   </section>
 
   <div class="faq-area">
+    <div class="container search-wrap">
+      <div class="search">
+        <span class="search__icon">🔍</span>
+        <input type="text" id="search-input" class="search__input" placeholder="Digite sua dúvida (ex.: AVA, boleto, calendário, matrícula...)" autocomplete="off" aria-label="Pesquisar perguntas frequentes">
+        <div class="search__suggestions" id="search-suggestions" role="listbox" hidden></div>
+      </div>
+    </div>
+
     <div class="container pills-wrap">
       <div class="pills" id="category-pills"></div>
     </div>
@@ -78,6 +82,22 @@
   </div>
 
 </main>
+
+<div class="modal-overlay" id="stage-overlay" hidden>
+  <div class="modal" id="stage-modal" role="dialog" aria-modal="true">
+    <div class="modal__header">
+      <button class="modal__close" id="close-stage" type="button" aria-label="Fechar">✕</button>
+      <div class="modal__heading">
+        <div class="modal__icon" id="stage-icon"></div>
+        <div>
+          <h3 class="modal__title" id="stage-title"></h3>
+          <p class="modal__subtitle" id="stage-subtitle"></p>
+        </div>
+      </div>
+    </div>
+    <div class="modal__body" id="stage-body"></div>
+  </div>
+</div>
 
 <div class="modal-overlay" id="onboarding-overlay" hidden>
   <div class="modal" id="onboarding-modal" role="dialog" aria-modal="true">
@@ -132,7 +152,7 @@
   </div>
 </footer>
 
-<script src="js/data.js?v=4"></script>
-<script src="js/main.js?v=4"></script>
+<script src="js/data.js?v=5"></script>
+<script src="js/main.js?v=5"></script>
 </body>
 </html>
