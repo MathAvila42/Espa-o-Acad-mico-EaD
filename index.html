@@ -12,11 +12,18 @@
 <body>
 
 <header class="header">
-  <img class="header__logo" src="assets/logo.png" alt="ULBRA">
-  <div class="header__divider"></div>
-  <div class="header__titles">
-    <div class="header__title">Central de Dúvidas EaD</div>
-    <div class="header__subtitle">Espaço Acadêmico · Educação a Distância</div>
+  <div class="header__inner">
+    <a class="header__brand" href="#" aria-label="ULBRA Online">
+      <img class="header__logo" src="assets/logo.png" alt="ULBRA">
+      <span class="header__brand-pill">online</span>
+    </a>
+    <nav class="header__nav" id="header-nav">
+      <a class="header__nav-link" href="#" id="header-search-link"><span class="header__nav-icon">🔍</span>Buscar</a>
+      <a class="header__nav-link" href="#"><span class="header__nav-icon">📍</span>Alterar Unidade</a>
+      <a class="header__nav-btn header__nav-btn--ghost" href="https://ac3949.mannesoftprime.com.br/webaluno/" target="_blank" rel="noopener">Já sou Aluno ▾</a>
+      <a class="header__nav-btn header__nav-btn--solid" href="#">Matricule-se ▾</a>
+    </nav>
+    <button class="header__menu-btn" type="button" aria-label="Abrir menu" id="header-menu-btn" aria-expanded="false">☰</button>
   </div>
 </header>
 
@@ -26,20 +33,20 @@
     <div class="hero__bg"></div>
     <div class="hero__overlay"></div>
     <div class="hero__content">
+      <div class="hero__eyebrow">Central de Dúvidas</div>
+      <h1 class="hero__title">Encontre a resposta<br>que você precisa</h1>
+      <p class="hero__subtitle">Respostas claras para alunos EaD ULBRA</p>
       <div class="search">
         <span class="search__icon">🔍</span>
         <input type="text" id="search-input" class="search__input" placeholder="Digite sua dúvida (ex.: AVA, boleto, calendário, matrícula...)" autocomplete="off" aria-label="Pesquisar perguntas frequentes">
         <div class="search__suggestions" id="search-suggestions" role="listbox" hidden></div>
       </div>
-      <div class="hero__eyebrow">Central de Dúvidas</div>
-      <h1 class="hero__title">Encontre a resposta<br>que você precisa</h1>
-      <p class="hero__subtitle">Respostas claras para alunos EaD ULBRA</p>
     </div>
   </section>
 
   <section class="intro">
     <div class="intro__inner">
-      <div class="intro__eyebrow"><span>✦</span><span>Novo por aqui?</span></div>
+      <div class="intro__eyebrow">Novo por aqui?</div>
       <h2 class="intro__title">Seja bem-vindo à ULBRA EaD</h2>
       <p class="intro__text">Acesse os sistemas e confira as dúvidas mais importantes de quem está começando.</p>
 
@@ -111,35 +118,24 @@
 
 <footer class="footer">
   <div class="footer__inner">
-    <div class="footer__top">
-      <div class="footer__col">
-        <div class="footer__logo-row">
-          <img class="footer__logo" src="assets/logo.png" alt="ULBRA">
-          <div class="footer__logo-caption">Educação a Distância</div>
-        </div>
-        <p class="footer__address">Universidade Luterana do Brasil<br>Canoas, Rio Grande do Sul</p>
-      </div>
-      <div class="footer__col">
-        <p class="footer__heading">Sistemas</p>
-        <div class="footer__links">
-          <a href="https://ac3949.mannesoftprime.com.br/webaluno/">WebAluno</a>
-          <a href="#">Plataforma Aula</a>
-          <a href="#">Webmail Institucional</a>
-        </div>
-      </div>
-      <div class="footer__col">
-        <p class="footer__heading">Precisa de ajuda?</p>
-        <p class="footer__help-text">Central de Relacionamento ao Aluno EaD ou polo de apoio presencial.</p>
-        <a class="footer__cta" href="#">Falar com Central ›</a>
-      </div>
+    <nav class="footer__nav">
+      <a href="#">Ensino</a>
+      <a href="#">Pesquisa</a>
+      <a href="#">Sobre a ULBRA</a>
+      <a href="#">Extensão</a>
+      <a href="#">Espaço Acadêmico</a>
+      <a href="#">Inovação</a>
+      <a href="#">Atendimento</a>
+      <a href="#">Trabalhe conosco</a>
+    </nav>
+    <div class="footer__divider"></div>
+    <div class="footer__logo-row">
+      <img class="footer__logo" src="assets/logo.png" alt="ULBRA">
     </div>
-    <div class="footer__bottom">
-      <p class="footer__copyright">© 2025 ULBRA – Universidade Luterana do Brasil. Todos os direitos reservados.</p>
-      <div class="footer__legal">
-        <a href="#">Política de Privacidade</a>
-        <a href="#">Termos de Uso</a>
-      </div>
-    </div>
+    <p class="footer__address">
+      <strong>Ulbra EAD - Educação a Distância</strong> - Av. Farroupilha, 8001 · Saguão do Prédio 6 · Espaço Educação Continuada · Bairro São José · Canoas/RS · CEP: 92425-900 · Telefone: 0800.051.4131 · E-mail: <a href="mailto:portalead@ulbra.br">portalead@ulbra.br</a>
+    </p>
+    <a class="footer__legal-link" href="#">Política de privacidade</a>
   </div>
 </footer>
 
