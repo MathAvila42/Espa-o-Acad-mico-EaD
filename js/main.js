@@ -105,6 +105,14 @@ const onboardingDotsEl = document.getElementById('onboarding-dots');
 const onboardingPrevBtn = document.getElementById('onboarding-prev');
 const onboardingNextBtn = document.getElementById('onboarding-next');
 
+const stageBlocksEl = document.getElementById('stage-blocks');
+const stageOverlayEl = document.getElementById('stage-overlay');
+const stageIconEl = document.getElementById('stage-icon');
+const stageTitleEl = document.getElementById('stage-title');
+const stageSubtitleEl = document.getElementById('stage-subtitle');
+const stageBodyEl = document.getElementById('stage-body');
+const closeStageBtn = document.getElementById('close-stage');
+
 let activeCategory = 'all';
 let openItemIds = new Set();
 let searchQuery = '';
@@ -112,6 +120,7 @@ let highlightedItem = null;
 let showSuggestions = false;
 let onboardingOpen = false;
 let onboardingStep = 0;
+let stageModalOpen = false;
 
 function getFilteredSections() {
   const rawQuery = searchQuery.trim();
@@ -185,6 +194,80 @@ function renderQuickLinks() {
     </a>
   `).join('');
 }
+
+function renderStageBlocks() {
+  stageBlocksEl.innerHTML = STAGE_BLOCKS.map((stage) => `
+    <button class="stage-block" data-id="${stage.id}" type="button">
+      <div class="stage-block__icon">${stage.icon}</div>
+      <div class="stage-block__title">${stage.title}</div>
+      <div class="stage-block__subtitle">${stage.subtitle}</div>
+    </button>
+  `).join('');
+  stageBlocksEl.querySelectorAll('.stage-block').forEach((btn) => {
+    btn.addEventListener('click', () => openStageModal(btn.dataset.id));
+  });
+}
+
+function openStageModal(stageId) {
+  const stage = STAGE_BLOCKS.find((s) => s.id === stageId);
+  if (!stage) return;
+
+  stageIconEl.textContent = stage.icon;
+  stageTitleEl.textContent = stage.title;
+  stageSubtitleEl.textContent = stage.subtitle;
+
+  const itemRefs = (stage.items || []).map(findFaqItemById).filter(Boolean);
+  const itemsHtml = itemRefs.map(({ item, catId }) => `
+    <button class="modal__bullet modal__bullet--link" data-id="${item.id}" data-cat="${catId}" type="button">
+      <div class="modal__bullet-icon">❓</div>
+      <div class="modal__bullet-body">
+        <div class="modal__bullet-title">${item.q}</div>
+      </div>
+    </button>
+  `).join('');
+
+  const noteHtml = stage.note ? `
+    <div class="modal__note">
+      <span class="modal__note-icon">💡</span>
+      <p class="modal__note-text">${stage.note}</p>
+    </div>
+  ` : '';
+
+  stageBodyEl.innerHTML = itemsHtml + noteHtml + '<div class="modal__spacer"></div>';
+
+  stageBodyEl.querySelectorAll('.modal__bullet--link').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      closeStageModal();
+      goToQuestion(btn.dataset.id, btn.dataset.cat);
+    });
+  });
+
+  if (stage.cta) {
+    const ctaBtn = document.createElement('button');
+    ctaBtn.className = 'modal__cta';
+    ctaBtn.type = 'button';
+    ctaBtn.textContent = stage.cta.label + ' ↗';
+    ctaBtn.addEventListener('click', () => {
+      closeStageModal();
+      if (stage.cta.action === 'onboarding') openOnboarding();
+    });
+    stageBodyEl.insertBefore(ctaBtn, stageBodyEl.lastElementChild);
+  }
+
+  stageModalOpen = true;
+  stageOverlayEl.hidden = false;
+}
+
+function closeStageModal() {
+  stageModalOpen = false;
+  stageOverlayEl.hidden = true;
+}
+
+closeStageBtn.addEventListener('click', closeStageModal);
+
+stageOverlayEl.addEventListener('click', (e) => {
+  if (e.target === stageOverlayEl) closeStageModal();
+});
 
 function renderFaqItem(item) {
   const isOpen = openItemIds.has(item.id);
@@ -441,6 +524,10 @@ onboardingOverlayEl.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && stageModalOpen) {
+    closeStageModal();
+    return;
+  }
   if (e.key === 'Escape' && onboardingOpen) {
     closeOnboarding();
     return;
@@ -464,5 +551,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 renderQuickLinks();
+renderStageBlocks();
 renderPills();
 renderFaqArea();
