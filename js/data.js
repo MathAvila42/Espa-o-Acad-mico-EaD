@@ -24,14 +24,6 @@ const QUICK_LINKS = [
 
 const STAGE_BLOCKS = [
   {
-    id: 'comecando',
-    icon: '🚀',
-    title: 'Começando na Ulbra',
-    subtitle: 'Primeiro acesso, e-mail institucional e polo de apoio',
-    items: ['va12', 'va7', 'va2', 'va4'],
-    cta: { label: 'Abrir Guia do Novo Aluno', action: 'onboarding' },
-  },
-  {
     id: 'vida-academica',
     icon: '📚',
     title: 'Minha Vida Acadêmica',
