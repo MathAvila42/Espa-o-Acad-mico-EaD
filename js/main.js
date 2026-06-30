@@ -420,6 +420,22 @@ function closeOnboarding() {
 document.getElementById('open-onboarding').addEventListener('click', openOnboarding);
 document.getElementById('close-onboarding').addEventListener('click', closeOnboarding);
 
+const headerNavEl = document.getElementById('header-nav');
+const headerMenuBtn = document.getElementById('header-menu-btn');
+
+headerMenuBtn.addEventListener('click', () => {
+  const isOpen = headerNavEl.classList.toggle('is-open');
+  headerMenuBtn.setAttribute('aria-expanded', String(isOpen));
+});
+
+document.getElementById('header-search-link').addEventListener('click', (e) => {
+  e.preventDefault();
+  headerNavEl.classList.remove('is-open');
+  headerMenuBtn.setAttribute('aria-expanded', 'false');
+  searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  searchInput.focus();
+});
+
 onboardingPrevBtn.addEventListener('click', () => {
   onboardingStep = Math.max(0, onboardingStep - 1);
   renderOnboarding();
