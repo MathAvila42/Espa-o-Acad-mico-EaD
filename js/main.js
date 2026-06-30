@@ -87,7 +87,6 @@ function findFaqItemById(id) {
 }
 
 const searchInput = document.getElementById('search-input');
-const searchSuggestions = document.getElementById('search-suggestions');
 const categoryPillsEl = document.getElementById('category-pills');
 const resultCountWrap = document.getElementById('result-count-wrap');
 const resultCountEl = document.getElementById('result-count');
@@ -117,7 +116,6 @@ let activeCategory = 'all';
 let openItemIds = new Set();
 let searchQuery = '';
 let highlightedItem = null;
-let showSuggestions = false;
 let onboardingOpen = false;
 let onboardingStep = 0;
 let stageModalOpen = false;
@@ -143,29 +141,6 @@ function getFilteredSections() {
     .filter((s) => s.items.length > 0);
 }
 
-function getSuggestions() {
-  const rawQuery = searchQuery.trim();
-  const terms = expandQueryTerms(rawQuery);
-  if (!terms.length) return [];
-
-  const toSuggestion = (item, s) => ({ id: item.id, catId: s.id, q: item.q, catLabel: s.label, catIcon: s.icon, essential: !!item.essential });
-
-  const results = [];
-  for (const s of FAQ_DATA) {
-    for (const item of s.items) {
-      if (matchesTerms(item, terms)) results.push(toSuggestion(item, s));
-    }
-  }
-  if (!results.length) {
-    for (const s of FAQ_DATA) {
-      for (const item of s.items) {
-        if (matchesFuzzy(item, rawQuery)) results.push(toSuggestion(item, s));
-      }
-    }
-  }
-  return results.slice(0, 8);
-}
-
 function renderPills() {
   categoryPillsEl.innerHTML = CATEGORIES.map((cat) => `
     <button class="pill${cat.id === activeCategory ? ' is-active' : ''}" data-id="${cat.id}" type="button" aria-pressed="${cat.id === activeCategory}">
@@ -180,7 +155,6 @@ function renderPills() {
       searchInput.value = '';
       renderPills();
       renderFaqArea();
-      renderSuggestions();
     });
   });
 }
@@ -217,14 +191,21 @@ function openStageModal(stageId) {
   stageSubtitleEl.textContent = stage.subtitle;
 
   const itemRefs = (stage.items || []).map(findFaqItemById).filter(Boolean);
-  const itemsHtml = itemRefs.map(({ item, catId }) => `
-    <button class="modal__bullet modal__bullet--link" data-id="${item.id}" data-cat="${catId}" type="button">
+  const itemsHtml = itemRefs.map(({ item, catId }) => {
+    const stepsHtml = item.steps && item.steps.length
+      ? `<ol class="faq-item__steps">${item.steps.map((s) => `<li>${s}</li>`).join('')}</ol>`
+      : '';
+    return `
+    <div class="modal__bullet modal__bullet--link" data-id="${item.id}" data-cat="${catId}" role="button" tabindex="0">
       <div class="modal__bullet-icon">❓</div>
       <div class="modal__bullet-body">
         <div class="modal__bullet-title">${item.q}</div>
+        <div class="modal__bullet-text">${item.a}</div>
+        ${stepsHtml}
       </div>
-    </button>
-  `).join('');
+    </div>
+  `;
+  }).join('');
 
   const noteHtml = stage.note ? `
     <div class="modal__note">
@@ -236,9 +217,16 @@ function openStageModal(stageId) {
   stageBodyEl.innerHTML = itemsHtml + noteHtml + '<div class="modal__spacer"></div>';
 
   stageBodyEl.querySelectorAll('.modal__bullet--link').forEach((btn) => {
-    btn.addEventListener('click', () => {
+    const activate = () => {
       closeStageModal();
       goToQuestion(btn.dataset.id, btn.dataset.cat);
+    };
+    btn.addEventListener('click', activate);
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activate();
+      }
     });
   });
 
@@ -354,32 +342,6 @@ function renderFaqArea() {
   attachFaqItemListeners();
 }
 
-function renderSuggestions() {
-  const suggestions = getSuggestions();
-  const visible = showSuggestions && suggestions.length > 0;
-  searchSuggestions.hidden = !visible;
-  if (!visible) {
-    searchSuggestions.innerHTML = '';
-    return;
-  }
-  searchSuggestions.innerHTML = suggestions.map((sug) => `
-    <button class="suggestion" data-id="${sug.id}" data-cat="${sug.catId}" type="button" role="option">
-      <span class="suggestion__icon">${sug.catIcon}</span>
-      <div class="suggestion__body">
-        <div class="suggestion__question">${sug.q}</div>
-        <div class="suggestion__category">${sug.catLabel}</div>
-      </div>
-      ${sug.essential ? '<span class="suggestion__essential">★</span>' : ''}
-    </button>
-  `).join('');
-  searchSuggestions.querySelectorAll('.suggestion').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      showSuggestions = false;
-      goToQuestion(btn.dataset.id, btn.dataset.cat);
-    });
-  });
-}
-
 function goToQuestion(id, catId) {
   activeCategory = catId;
   openItemIds = new Set([id]);
@@ -389,7 +351,6 @@ function goToQuestion(id, catId) {
 
   renderPills();
   renderFaqArea();
-  renderSuggestions();
 
   setTimeout(() => {
     const el = document.getElementById('faq-' + id);
@@ -408,19 +369,6 @@ searchInput.addEventListener('input', (e) => {
 
   renderPills();
   renderFaqArea();
-  renderSuggestions();
-});
-
-searchInput.addEventListener('focus', () => {
-  showSuggestions = true;
-  renderSuggestions();
-});
-
-searchInput.addEventListener('blur', () => {
-  setTimeout(() => {
-    showSuggestions = false;
-    renderSuggestions();
-  }, 180);
 });
 
 searchInput.addEventListener('keydown', (e) => {
@@ -538,7 +486,6 @@ document.addEventListener('keydown', (e) => {
     activeCategory = 'all';
     renderPills();
     renderFaqArea();
-    renderSuggestions();
     return;
   }
   if (e.key === '/' && !onboardingOpen) {
