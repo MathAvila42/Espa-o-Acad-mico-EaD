@@ -41,110 +41,31 @@ a { text-decoration: none; color: inherit; }
   top: 0; left: 0; right: 0;
   z-index: 1000;
   background: linear-gradient(to right, #0d3634, #045a52);
+  height: 89px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 12px;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.28);
 }
 
-.header__inner {
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 0 24px;
-  max-width: 1280px;
-  margin: 0 auto;
-}
+.header__logo { height: 40px; object-fit: contain; }
 
-.header__brand { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.header__divider { width: 1px; height: 28px; background: rgba(255, 255, 255, 0.18); }
 
-.header__logo { height: 26px; object-fit: contain; }
+.header__titles { display: flex; flex-direction: column; gap: 5px; }
 
-.header__brand-pill {
-  border: 1px solid rgba(204, 162, 105, 0.5);
-  border-radius: 9999px;
-  padding: 1px 10px;
-  color: #cca269;
+.header__title { color: white; font-size: 13px; font-weight: 600; }
+
+.header__subtitle {
+  color: rgba(255, 255, 255, 0.68);
   font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.header__nav { display: flex; align-items: center; gap: 22px; }
-
-.header__nav-link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 13px;
   font-weight: 500;
-  white-space: nowrap;
-  transition: color 0.15s;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
-.header__nav-link:hover { color: white; }
-
-.header__nav-icon { font-size: 13px; }
-
-.header__nav-btn {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 9999px;
-  padding: 8px 18px;
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-  font-family: inherit;
-  transition: background 0.15s;
-}
-
-.header__nav-btn--ghost {
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: white;
-}
-
-.header__nav-btn--ghost:hover { background: rgba(255, 255, 255, 0.08); }
-
-.header__nav-btn--solid {
-  background: #cca269;
-  color: #0d3634;
-  border: 1px solid #cca269;
-}
-
-.header__nav-btn--solid:hover { background: #d8b483; }
-
-.header__menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
-}
-
-main { padding-top: 68px; }
-
-@media (max-width: 860px) {
-  .header__nav {
-    display: none;
-    position: fixed;
-    top: 68px; left: 0; right: 0;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-    background: #0d3634;
-    padding: 18px 24px 22px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-  }
-
-  .header__nav.is-open { display: flex; }
-
-  .header__nav-btn { justify-content: center; }
-
-  .header__menu-btn { display: block; }
-}
+main { padding-top: 89px; }
 
 /* ---------- HERO ---------- */
 
