@@ -77,6 +77,13 @@ const STAGE_BLOCKS = [
     items: ['fo1', 'fo2', 'fo3'],
     note: 'Detalhes específicos sobre o TCC variam conforme o curso. Consulte a Coordenação do seu Curso para orientações.',
   },
+  {
+    id: 'contatos',
+    icon: '📞',
+    title: 'Contatos',
+    subtitle: 'Central de Relacionamento, coordenação, polo e tutores',
+    items: ['te7', 'va1', 'va13', 'va3'],
+  },
 ];
 
 const ONBOARDING_STEPS = [
