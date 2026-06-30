@@ -22,6 +22,63 @@ const QUICK_LINKS = [
   { icon: '📅', label: 'Calendário Acadêmico', href: 'https://www.ulbra.br/canoas/espaco-academico/calendario-academico' },
 ];
 
+const STAGE_BLOCKS = [
+  {
+    id: 'comecando',
+    icon: '🚀',
+    title: 'Começando na Ulbra',
+    subtitle: 'Primeiro acesso, e-mail institucional e polo de apoio',
+    items: ['va12', 'va7', 'va2', 'va4'],
+    cta: { label: 'Abrir Guia do Novo Aluno', action: 'onboarding' },
+  },
+  {
+    id: 'vida-academica',
+    icon: '📚',
+    title: 'Minha Vida Acadêmica',
+    subtitle: 'Disciplinas, avaliações e calendário',
+    items: ['av1', 'av9', 'av10', 'di1', 'va10'],
+  },
+  {
+    id: 'sistemas',
+    icon: '💻',
+    title: 'Sistemas e Ferramentas',
+    subtitle: 'Canvas, WebAluno, Office e Biblioteca',
+    items: ['pl1', 'pl2', 'te1', 'te2'],
+    note: 'Em breve traremos orientações específicas sobre Microsoft Office e Biblioteca Virtual. Por enquanto, consulte o WebAluno ou a Central de Relacionamento EaD.',
+  },
+  {
+    id: 'solicitacoes',
+    icon: '📝',
+    title: 'Solicitações e Documentos',
+    subtitle: 'Protocolos, declarações e aproveitamento',
+    items: [],
+    note: 'Em breve traremos orientações específicas sobre protocolos, declarações e aproveitamento de estudos. Por enquanto, essas solicitações podem ser feitas pelo WebAluno ou diretamente com a Central de Relacionamento EaD.',
+  },
+  {
+    id: 'financeiro',
+    icon: '💰',
+    title: 'Financeiro e Benefícios',
+    subtitle: 'Boletos, pagamentos, bolsas e benefícios',
+    items: ['fi1'],
+  },
+  {
+    id: 'desenvolvimento',
+    icon: '🌱',
+    title: 'Desenvolvimento Acadêmico e Profissional',
+    subtitle: 'Estágio, extensão, eventos e carreira',
+    items: ['po1', 'po2', 'po4', 'in1'],
+    note: 'Em breve traremos orientações específicas sobre estágio obrigatório/não obrigatório e atividades de extensão. Por enquanto, consulte a Coordenação do seu Curso ou o Espaço Acadêmico.',
+  },
+  {
+    id: 'conclusao',
+    icon: '🎓',
+    title: 'Conclusão do Curso',
+    subtitle: 'TCC, atividades complementares, colação e diploma',
+    items: ['fo1', 'fo2', 'fo3'],
+    note: 'Detalhes específicos sobre o TCC variam conforme o curso. Consulte a Coordenação do seu Curso para orientações.',
+  },
+];
+
 const ONBOARDING_STEPS = [
   {
     icon: '🎓',
