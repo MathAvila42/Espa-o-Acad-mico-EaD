@@ -112,6 +112,59 @@ main { padding-top: 89px; }
 
 .search { position: relative; max-width: 500px; margin: 0 auto; }
 
+.search-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0; right: 0;
+  background: #fff;
+  border: 1px solid #dce8e6;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+  z-index: 200;
+  overflow: hidden;
+  animation: fadeUp 0.15s ease;
+}
+
+.search-suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 18px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f0f5f4;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.12s;
+}
+.search-suggestion:last-child { border-bottom: none; }
+.search-suggestion:hover,
+.search-suggestion.is-active { background: #f4f9f8; }
+
+.search-suggestion__q {
+  font-size: 14px;
+  color: #1a2f2e;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-suggestion__cat {
+  font-size: 11px;
+  font-weight: 600;
+  color: #4a6b68;
+  background: #e2eeec;
+  padding: 2px 8px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .search__icon {
   position: absolute; left: 18px; top: 50%;
   transform: translateY(-50%);
@@ -509,6 +562,30 @@ main { padding-top: 89px; }
 .no-results__title { font-size: 18px; font-weight: 700; color: #1a2f2e; margin-bottom: 8px; }
 
 .no-results__text { color: #5a7a78; font-size: 14px; max-width: 300px; margin: 0 auto; line-height: 1.6; }
+
+.no-results__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.no-results__contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #045a52;
+  background: #e2eeec;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.no-results__contact-btn:hover { background: #cfe8e4; }
+.no-results__contact-btn .material-symbols-outlined { font-size: 16px; }
 
 /* ---------- ONBOARDING MODAL ---------- */
 
