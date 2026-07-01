@@ -1,37 +1,37 @@
 // FAQ content, categories and onboarding steps for the Central de Dúvidas EaD ULBRA page.
 
 const CATEGORIES = [
-  { id: 'vida-academica', icon: '🎓', label: 'Vida Acadêmica' },
-  { id: 'plataforma', icon: '💻', label: 'Plataforma' },
-  { id: 'avaliacoes', icon: '📝', label: 'Avaliações' },
-  { id: 'disciplinas', icon: '📚', label: 'Disciplinas' },
-  { id: 'curso', icon: '🎯', label: 'Curso' },
-  { id: 'financeiro', icon: '💰', label: 'Financeiro' },
-  { id: 'portfolio', icon: '💼', label: 'Portfólio e Carreira' },
-  { id: 'internacional', icon: '🌍', label: 'Internacionalização' },
-  { id: 'qualidade', icon: '⭐', label: 'Qualidade Acadêmica' },
-  { id: 'formatura', icon: '🏆', label: 'Formatura' },
-  { id: 'tecnico', icon: '🔧', label: 'Problemas Técnicos' },
+  { id: 'vida-academica', icon: 'school', label: 'Vida Acadêmica' },
+  { id: 'plataforma', icon: 'computer', label: 'Plataforma' },
+  { id: 'avaliacoes', icon: 'assignment', label: 'Avaliações' },
+  { id: 'disciplinas', icon: 'menu_book', label: 'Disciplinas' },
+  { id: 'curso', icon: 'my_location', label: 'Curso' },
+  { id: 'financeiro', icon: 'payments', label: 'Financeiro' },
+  { id: 'portfolio', icon: 'work', label: 'Portfólio e Carreira' },
+  { id: 'internacional', icon: 'language', label: 'Internacionalização' },
+  { id: 'qualidade', icon: 'star', label: 'Qualidade Acadêmica' },
+  { id: 'formatura', icon: 'emoji_events', label: 'Formatura' },
+  { id: 'tecnico', icon: 'build', label: 'Problemas Técnicos' },
 ];
 
 const QUICK_LINKS = [
-  { icon: '👤', label: 'WebAluno', href: 'https://ac3949.mannesoftprime.com.br/webaluno/' },
-  { icon: '💻', label: 'Plataforma Aula', href: '#' },
-  { icon: '📧', label: 'Webmail', href: '#' },
-  { icon: '📅', label: 'Calendário Acadêmico', href: 'https://www.ulbra.br/canoas/espaco-academico/calendario-academico' },
+  { icon: 'person', label: 'WebAluno', href: 'https://ac3949.mannesoftprime.com.br/webaluno/' },
+  { icon: 'computer', label: 'Plataforma Aula', href: '#' },
+  { icon: 'email', label: 'Webmail', href: '#' },
+  { icon: 'calendar_month', label: 'Calendário Acadêmico', href: 'https://www.ulbra.br/canoas/espaco-academico/calendario-academico' },
 ];
 
 const STAGE_BLOCKS = [
   {
     id: 'vida-academica',
-    icon: '📚',
+    icon: 'menu_book',
     title: 'Minha Vida Acadêmica',
     subtitle: 'Disciplinas, avaliações e calendário',
     items: ['av1', 'av9', 'av10', 'di1', 'va10'],
   },
   {
     id: 'sistemas',
-    icon: '💻',
+    icon: 'computer',
     title: 'Sistemas e Ferramentas',
     subtitle: 'Canvas, WebAluno, Office e Biblioteca',
     items: ['pl1', 'pl2', 'te1', 'te2'],
@@ -39,7 +39,7 @@ const STAGE_BLOCKS = [
   },
   {
     id: 'solicitacoes',
-    icon: '📝',
+    icon: 'assignment',
     title: 'Solicitações e Documentos',
     subtitle: 'Protocolos, declarações e aproveitamento',
     items: [],
@@ -47,14 +47,14 @@ const STAGE_BLOCKS = [
   },
   {
     id: 'financeiro',
-    icon: '💰',
+    icon: 'payments',
     title: 'Financeiro e Benefícios',
     subtitle: 'Boletos, pagamentos, bolsas e benefícios',
     items: ['fi1'],
   },
   {
     id: 'desenvolvimento',
-    icon: '🌱',
+    icon: 'eco',
     title: 'Desenvolvimento Acadêmico e Profissional',
     subtitle: 'Estágio, extensão, eventos e carreira',
     items: ['po1', 'po2', 'po4', 'in1'],
@@ -62,7 +62,7 @@ const STAGE_BLOCKS = [
   },
   {
     id: 'conclusao',
-    icon: '🎓',
+    icon: 'school',
     title: 'Conclusão do Curso',
     subtitle: 'TCC, atividades complementares, colação e diploma',
     items: ['fo1', 'fo2', 'fo3'],
@@ -70,7 +70,7 @@ const STAGE_BLOCKS = [
   },
   {
     id: 'contatos',
-    icon: '📞',
+    icon: 'phone',
     title: 'Contatos',
     subtitle: 'Central de Relacionamento, coordenação, polo e tutores',
     items: ['te7', 'va1', 'va13', 'va3'],
@@ -79,106 +79,106 @@ const STAGE_BLOCKS = [
 
 const ONBOARDING_STEPS = [
   {
-    icon: '🎓',
+    icon: 'school',
     title: 'Bem-vindo à ULBRA EaD!',
     bullets: [
-      { icon: '🏫', title: 'Modalidade 100% on-line', text: 'Você estuda no seu ritmo, de onde quiser. Aulas, materiais e atividades estão disponíveis 24h na Plataforma Aula.' },
-      { icon: '📍', title: 'Polo de apoio presencial', text: 'Você está vinculado a um polo onde realizará as avaliações presenciais. Anote o endereço e os contatos do seu polo.' },
+      { icon: 'domain', title: 'Modalidade 100% on-line', text: 'Você estuda no seu ritmo, de onde quiser. Aulas, materiais e atividades estão disponíveis 24h na Plataforma Aula.' },
+      { icon: 'location_on', title: 'Polo de apoio presencial', text: 'Você está vinculado a um polo onde realizará as avaliações presenciais. Anote o endereço e os contatos do seu polo.' },
     ],
     note: 'Esta Central de Dúvidas reúne as respostas mais importantes do EaD ULBRA. Volte aqui sempre que precisar!',
   },
   {
-    icon: '👤',
+    icon: 'person',
     title: 'WebAluno: seu portal principal',
     bullets: [
-      { icon: '👤', title: 'WebAluno', text: 'Portal principal: matrícula, notas, dados do curso e acesso aos demais sistemas.' },
-      { icon: '🔑', title: 'Primeiro acesso', text: 'No WebAluno, use seu CPF como usuário e sua data de nascimento (ddmmaa) como senha. Exemplo: nascido em 01/02/2000 → senha inicial 010200.' },
+      { icon: 'person', title: 'WebAluno', text: 'Portal principal: matrícula, notas, dados do curso e acesso aos demais sistemas.' },
+      { icon: 'key', title: 'Primeiro acesso', text: 'No WebAluno, use seu CPF como usuário e sua data de nascimento (ddmmaa) como senha. Exemplo: nascido em 01/02/2000 → senha inicial 010200.' },
     ],
     note: 'Todos os sistemas são acessados pelo Espaço Acadêmico no site da ULBRA (Já sou aluno).',
   },
   {
-    icon: '📅',
+    icon: 'calendar_month',
     title: 'Datas que você precisa marcar',
     bullets: [
-      { icon: '📌', title: 'Datas que você precisa marcar', text: 'Início e fim das aulas, períodos das AP1 e AP2, Avaliação Semestral (AS), Avaliação Final (AF) e prazo de rematrícula.' },
-      { icon: '📲', title: 'Salve no seu celular', text: 'Registre as datas críticas na agenda com lembretes de antecedência — especialmente para as avaliações presenciais.' },
+      { icon: 'push_pin', title: 'Datas que você precisa marcar', text: 'Início e fim das aulas, períodos das AP1 e AP2, Avaliação Semestral (AS), Avaliação Final (AF) e prazo de rematrícula.' },
+      { icon: 'smartphone', title: 'Salve no seu celular', text: 'Registre as datas críticas na agenda com lembretes de antecedência — especialmente para as avaliações presenciais.' },
     ],
     note: 'Calendário disponível em: ulbra.br/canoas/espaco-academico/calendario-academico',
     cta: { label: 'Abrir calendário acadêmico', href: 'https://www.ulbra.br/canoas/espaco-academico/calendario-academico' },
   },
   {
-    icon: '💻',
+    icon: 'computer',
     title: 'Sistemas e calendário',
     bullets: [
-      { icon: '📚', title: 'Plataforma Aula', text: 'Onde você assiste aulas, realiza atividades, interage com professores e faz as provas AP1 e AP2.' },
-      { icon: '📆', title: 'Prazos são sua responsabilidade', text: 'No EaD, cumprir os prazos depende de você. Use o calendário acadêmico EaD para organizar o semestre.' },
-      { icon: '🔍', title: 'Existe mais de um calendário', text: 'Há calendários para presencial, medicina e EaD. Consulte sempre o calendário EaD.' },
+      { icon: 'menu_book', title: 'Plataforma Aula', text: 'Onde você assiste aulas, realiza atividades, interage com professores e faz as provas AP1 e AP2.' },
+      { icon: 'event', title: 'Prazos são sua responsabilidade', text: 'No EaD, cumprir os prazos depende de você. Use o calendário acadêmico EaD para organizar o semestre.' },
+      { icon: 'search', title: 'Existe mais de um calendário', text: 'Há calendários para presencial, medicina e EaD. Consulte sempre o calendário EaD.' },
     ],
     note: null,
   },
   {
-    icon: '📝',
+    icon: 'assignment',
     title: 'Como funcionam as avaliações (1/2)',
     bullets: [
-      { icon: '🖥️', title: 'AP1 e AP2 — on-line (Plataforma Aula)', text: 'Prova objetiva + atividade prática. AP1 vale 2,0 pts; AP2 vale 3,0 pts.' },
-      { icon: '🏫', title: 'AS — presencial no polo', text: 'Avaliação Semestral vale 5,0 pts. Deve ser agendada com antecedência no polo de apoio.' },
+      { icon: 'monitor', title: 'AP1 e AP2 — on-line (Plataforma Aula)', text: 'Prova objetiva + atividade prática. AP1 vale 2,0 pts; AP2 vale 3,0 pts.' },
+      { icon: 'domain', title: 'AS — presencial no polo', text: 'Avaliação Semestral vale 5,0 pts. Deve ser agendada com antecedência no polo de apoio.' },
     ],
     note: null,
   },
   {
-    icon: '📝',
+    icon: 'assignment',
     title: 'Como funcionam as avaliações (2/2)',
     bullets: [
-      { icon: '🔄', title: 'AF — segunda chance presencial', text: 'Para quem ficou abaixo de 6,0 pts. A nota final é a maior entre a PS e a AF.' },
-      { icon: '✅', title: 'Aprovação com PS ≥ 6,0', text: 'PS = AP1 + AP2 + AS. Resultado igual ou superior a 6,0 = aprovado!' },
+      { icon: 'refresh', title: 'AF — segunda chance presencial', text: 'Para quem ficou abaixo de 6,0 pts. A nota final é a maior entre a PS e a AF.' },
+      { icon: 'check_circle', title: 'Aprovação com PS ≥ 6,0', text: 'PS = AP1 + AP2 + AS. Resultado igual ou superior a 6,0 = aprovado!' },
     ],
     note: null,
   },
   {
-    icon: '🤝',
+    icon: 'handshake',
     title: 'Comunicação e suporte (1/2)',
     bullets: [
-      { icon: '✉️', title: 'Crie seu e-mail institucional', text: 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que chegam os comunicados oficiais.' },
-      { icon: '📧', title: 'Webmail Institucional', text: 'Comunicados oficiais chegam exclusivamente por aqui. Acesse com regularidade!' },
+      { icon: 'mail', title: 'Crie seu e-mail institucional', text: 'Dentro do WebAluno, crie seu e-mail institucional com usuário e senha definitivos — é por ele que chegam os comunicados oficiais.' },
+      { icon: 'email', title: 'Webmail Institucional', text: 'Comunicados oficiais chegam exclusivamente por aqui. Acesse com regularidade!' },
     ],
     note: null,
   },
   {
-    icon: '🤝',
+    icon: 'handshake',
     title: 'Comunicação e suporte (2/2)',
     bullets: [
-      { icon: '🏫', title: 'Polo de apoio presencial', text: 'Primeiro ponto de contato para dúvidas, provas e suporte local. Guarde o contato do seu polo!' },
-      { icon: '👩‍🏫', title: 'Professores e tutores', text: 'Tire dúvidas de conteúdo pelos fóruns e mensagens na Plataforma Aula.' },
+      { icon: 'domain', title: 'Polo de apoio presencial', text: 'Primeiro ponto de contato para dúvidas, provas e suporte local. Guarde o contato do seu polo!' },
+      { icon: 'person', title: 'Professores e tutores', text: 'Tire dúvidas de conteúdo pelos fóruns e mensagens na Plataforma Aula.' },
     ],
     note: null,
   },
   {
-    icon: '📞',
+    icon: 'phone',
     title: 'Quando precisar de mais ajuda',
     bullets: [
-      { icon: '📞', title: 'Central de Relacionamento EaD', text: 'Para dúvidas não resolvidas no polo, problemas técnicos e solicitações acadêmicas: (51) 99274-1192 (ligação ou WhatsApp) ou relac.canoas@ulbra.br.' },
-      { icon: '🎓', title: 'Coordenação do curso', text: 'Para grade, aproveitamento de disciplinas e orientações específicas, consulte os contatos da coordenação do seu curso no site da ULBRA.' },
+      { icon: 'phone', title: 'Central de Relacionamento EaD', text: 'Para dúvidas não resolvidas no polo, problemas técnicos e solicitações acadêmicas: (51) 99274-1192 (ligação ou WhatsApp) ou relac.canoas@ulbra.br.' },
+      { icon: 'school', title: 'Coordenação do curso', text: 'Para grade, aproveitamento de disciplinas e orientações específicas, consulte os contatos da coordenação do seu curso no site da ULBRA.' },
     ],
     note: 'Nunca fique com dúvida! Use os canais certos para resolver logo.',
   },
   {
-    icon: '✅',
+    icon: 'check_circle',
     title: 'Checklist: seus primeiros passos (1/2)',
     bullets: [
-      { icon: '1️⃣', title: 'Acesse o WebAluno', text: 'Confirme seus dados, curso e polo de apoio.' },
-      { icon: '2️⃣', title: 'Entre na Plataforma Aula', text: 'Conheça suas disciplinas e ative todas as notificações.' },
-      { icon: '3️⃣', title: 'Consulte o calendário EaD', text: 'Marque as datas das avaliações na sua agenda agora!' },
+      { icon: 'looks_one', title: 'Acesse o WebAluno', text: 'Confirme seus dados, curso e polo de apoio.' },
+      { icon: 'looks_two', title: 'Entre na Plataforma Aula', text: 'Conheça suas disciplinas e ative todas as notificações.' },
+      { icon: 'looks_3', title: 'Consulte o calendário EaD', text: 'Marque as datas das avaliações na sua agenda agora!' },
     ],
     note: null,
   },
   {
-    icon: '✅',
+    icon: 'check_circle',
     title: 'Checklist: seus primeiros passos (2/2)',
     bullets: [
-      { icon: '4️⃣', title: 'Configure o Webmail', text: 'Acesse o e-mail institucional e ative os alertas de novas mensagens.' },
-      { icon: '5️⃣', title: 'Anote o contato do polo', text: 'Salve o telefone e e-mail do seu polo de apoio presencial.' },
+      { icon: 'looks_4', title: 'Configure o Webmail', text: 'Acesse o e-mail institucional e ative os alertas de novas mensagens.' },
+      { icon: 'looks_5', title: 'Anote o contato do polo', text: 'Salve o telefone e e-mail do seu polo de apoio presencial.' },
     ],
-    note: 'Tudo certo! Você está pronto para começar bem no EaD ULBRA. Bons estudos! 🎉',
+    note: 'Tudo certo! Você está pronto para começar bem no EaD ULBRA. Bons estudos!',
   },
 ];
 
@@ -193,7 +193,7 @@ const SEARCH_SYNONYMS = [
 
 const FAQ_DATA = [
   {
-    id: 'vida-academica', icon: '🎓', label: 'Vida Acadêmica',
+    id: 'vida-academica', icon: 'school', label: 'Vida Acadêmica',
     items: [
       { id: 'va1', q: 'Quem é o meu coordenador e como entrar em contato?', a: 'Consulte o Espaço Acadêmico ou o WebAluno para encontrar as informações de contato do coordenador do seu curso. A lista de coordenadores e seus e-mails está disponível na área do aluno.', system: 'Espaço Acadêmico / WebAluno' },
       { id: 'va13', q: 'Onde encontro o professor, tutor ou mediador da minha disciplina?', a: 'O contato do professor e do tutor/mediador de cada disciplina está disponível dentro da própria disciplina, na plataforma Aula. Acesse a disciplina desejada e consulte os fóruns, mensagens e mural de avisos para tirar dúvidas e entrar em contato.', system: 'Plataforma Aula' },
@@ -211,7 +211,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'plataforma', icon: '💻', label: 'Plataforma',
+    id: 'plataforma', icon: 'computer', label: 'Plataforma',
     items: [
       { id: 'pl1', q: 'Como acessar a plataforma Aula para acompanhar as disciplinas?', essential: true, a: 'O acesso ao Ambiente Virtual de Aprendizagem (Aula) é feito pelo site da ULBRA, na área "Já sou aluno", por meio do WebAluno. O ambiente também está disponível em aplicativo para dispositivos móveis — busque por "ULBRA" na loja de aplicativos.', system: 'WebAluno / Plataforma Aula', related: ['va12', 'te2'] },
       { id: 'pl2', q: 'Como ativar todas as notificações da plataforma Aula?', a: 'Acesse as configurações do seu perfil na plataforma Aula e habilite todas as notificações por e-mail e push. Assim você será avisado sobre novas atividades, avisos de professores e prazos importantes.', system: 'Plataforma Aula' },
@@ -221,7 +221,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'avaliacoes', icon: '📝', label: 'Avaliações',
+    id: 'avaliacoes', icon: 'assignment', label: 'Avaliações',
     items: [
       { id: 'av1', q: 'Como funciona o sistema de avaliação?', essential: true, a: 'Nas disciplinas teóricas e teórico-práticas, a avaliação é composta por atividades práticas, provas objetivas (AP1 e AP2) e uma Avaliação Semestral (AS) presencial. Caso necessário, o aluno pode realizar a Avaliação Final (AF).\n\nDisciplinas como estágios, TCCs e projetos possuem regras próprias e avaliações totalmente on-line.', related: ['av2', 'av9', 'av10'] },
       { id: 'av2', q: 'Quanto vale cada avaliação (AP1, AP2, AS e AF)?', a: 'AP1: 2,0 pontos\n  • Atividade prática: 0,5 ponto\n  • Prova objetiva: 1,5 pontos\n\nAP2: 3,0 pontos\n  • Atividade prática: 0,5 ponto\n  • Prova objetiva: 2,5 pontos\n\nAS: 5,0 pontos\n\nAF: até 10,0 pontos. A Pontuação Final será a maior entre a Pontuação Semestral (PS) e a nota da AF.', related: ['av1', 'av9'] },
@@ -236,7 +236,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'disciplinas', icon: '📚', label: 'Disciplinas',
+    id: 'disciplinas', icon: 'menu_book', label: 'Disciplinas',
     items: [
       { id: 'di1', q: 'As disciplinas eletivas são obrigatórias?', a: 'As disciplinas eletivas são obrigatórias para a conclusão do curso, mas o aluno tem flexibilidade para escolher quais cursar dentro das opções disponíveis. Consulte o WebAluno para ver as eletivas do seu curso.' },
       { id: 'di2', q: 'Posso deixar uma disciplina eletiva para outro semestre?', a: 'Sim, dentro do prazo máximo de integralização do curso. Planeje com atenção para não acumular disciplinas no final da graduação. Consulte o coordenador do curso para orientações específicas.', system: 'Coordenação do Curso' },
@@ -244,7 +244,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'curso', icon: '🎯', label: 'Curso',
+    id: 'curso', icon: 'my_location', label: 'Curso',
     items: [
       { id: 'cu1', q: 'Onde encontro o site do curso?', a: 'O site do seu curso está no portal da ULBRA (ulbra.br). Navegue até a seção de cursos EaD para acessar grade curricular, projeto pedagógico e corpo docente.', system: 'Portal ULBRA' },
       { id: 'cu2', q: 'Onde acompanho notícias e eventos do curso?', a: 'Acompanhe na plataforma Aula (avisos e fóruns), no e-mail institucional e no portal da ULBRA. Alguns cursos também mantêm grupos em redes sociais.', system: 'Plataforma Aula' },
@@ -254,13 +254,13 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'financeiro', icon: '💰', label: 'Financeiro',
+    id: 'financeiro', icon: 'payments', label: 'Financeiro',
     items: [
       { id: 'fi1', q: 'Como emitir boleto, negociar pagamentos ou consultar bolsas e Imposto de Renda?', a: 'Questões financeiras — emissão de boleto, segunda via, negociação de pagamentos, bolsas de estudo e informações para Imposto de Renda — devem ser tratadas diretamente com a Central de Relacionamento EaD.', system: 'Central de Relacionamento EaD' },
     ],
   },
   {
-    id: 'portfolio', icon: '💼', label: 'Portfólio e Carreira',
+    id: 'portfolio', icon: 'work', label: 'Portfólio e Carreira',
     items: [
       { id: 'po1', q: 'O que é o portfólio?', a: 'O portfólio é um compilado dos seus trabalhos e produções ao longo da graduação, usado para demonstrar competências e evolução profissional. É uma ferramenta importante para o mercado de trabalho.' },
       { id: 'po2', q: 'Quando devo começar a montar meu portfólio?', a: 'Desde o primeiro semestre! Guarde todos os trabalhos relevantes realizados nas disciplinas. Quanto antes você começar, mais rico será seu portfólio ao se formar.' },
@@ -269,7 +269,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'internacional', icon: '🌍', label: 'Internacionalização',
+    id: 'internacional', icon: 'language', label: 'Internacionalização',
     items: [
       { id: 'in1', q: 'O que é o programa de internacionalização?', a: 'É uma iniciativa da ULBRA que oferece oportunidades de experiência internacional por meio de parcerias com instituições estrangeiras e programas de mobilidade acadêmica.' },
       { id: 'in2', q: 'Como participar de oportunidades internacionais?', a: 'Consulte o Espaço Acadêmico e o site da ULBRA para conhecer os programas disponíveis. Entre em contato com o setor de internacionalização para informações sobre requisitos e inscrições.', system: 'Setor de Internacionalização' },
@@ -277,7 +277,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'qualidade', icon: '⭐', label: 'Qualidade Acadêmica',
+    id: 'qualidade', icon: 'star', label: 'Qualidade Acadêmica',
     items: [
       { id: 'qa1', q: 'O que é a CPA?', a: 'A CPA (Comissão Própria de Avaliação) é o órgão responsável pela avaliação institucional da ULBRA. Ela coleta opiniões de alunos, professores e funcionários para promover a melhoria contínua da universidade.', related: ['qa2'] },
       { id: 'qa2', q: 'Por que responder à CPA é importante?', a: 'Sua participação contribui diretamente para a melhoria dos cursos, da estrutura e dos serviços da universidade. A CPA garante que a voz do aluno seja ouvida e gere mudanças reais.', related: ['qa1'] },
@@ -289,7 +289,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'formatura', icon: '🏆', label: 'Formatura',
+    id: 'formatura', icon: 'emoji_events', label: 'Formatura',
     items: [
       { id: 'fo1', q: 'Quando posso solicitar a colação de grau?', a: 'Após integralizar todos os créditos e requisitos do curso, incluindo atividades complementares e TCC (quando exigido). A solicitação deve ser feita junto à Central de Relacionamento EaD, dentro dos prazos do calendário acadêmico.', system: 'Central de Relacionamento EaD', related: ['fo2', 'fo3'] },
       { id: 'fo2', q: 'Quais são os requisitos para me formar?', a: 'É necessário cumprir todas as disciplinas obrigatórias e eletivas, atividades complementares, estágio (quando exigido), TCC (quando aplicável) e demais requisitos do projeto pedagógico do seu curso.', related: ['fo1', 'fo3'] },
@@ -297,7 +297,7 @@ const FAQ_DATA = [
     ],
   },
   {
-    id: 'tecnico', icon: '🔧', label: 'Problemas Técnicos',
+    id: 'tecnico', icon: 'build', label: 'Problemas Técnicos',
     items: [
       { id: 'te1', q: 'Esqueci minha senha. Como recuperá-la?', essential: true, a: 'Para recuperar sua senha, siga estes passos:', steps: ['Acesse o WebAluno ou a plataforma Aula.', 'Use a opção "Esqueci minha senha".', 'Se o problema persistir, entre em contato com a Central de Relacionamento ao Aluno EaD ou com seu polo de apoio.'], system: 'WebAluno / Plataforma Aula', related: ['va12', 'pl1'] },
       { id: 'te2', q: 'Não consigo acessar a plataforma Aula. O que fazer?', essential: true, a: 'Se não conseguir acessar a plataforma Aula, siga esta ordem:', steps: ['Verifique se está acessando pelo WebAluno (caminho correto).', 'Tente outro navegador ou limpe o cache.', 'Caso o problema persista, entre em contato com a Central de Relacionamento EaD ou com seu polo de apoio presencial.'], system: 'Central de Relacionamento EaD', related: ['te1', 'pl1', 'te5'] },
