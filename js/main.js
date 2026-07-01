@@ -104,32 +104,19 @@ const onboardingDotsEl = document.getElementById('onboarding-dots');
 const onboardingPrevBtn = document.getElementById('onboarding-prev');
 const onboardingNextBtn = document.getElementById('onboarding-next');
 
-const stageBlocksEl = document.getElementById('stage-blocks');
-const stageOverlayEl = document.getElementById('stage-overlay');
-const stageIconEl = document.getElementById('stage-icon');
-const stageTitleEl = document.getElementById('stage-title');
-const stageSubtitleEl = document.getElementById('stage-subtitle');
-const stageBodyEl = document.getElementById('stage-body');
-const closeStageBtn = document.getElementById('close-stage');
-const stageScrollCueEl = document.getElementById('stage-scroll-cue');
-
-let activeCategory = 'all';
+let activeCategory = 'vida-academica';
 let openItemIds = new Set();
 let searchQuery = '';
 let highlightedItem = null;
 let onboardingOpen = false;
 let onboardingStep = 0;
-let stageModalOpen = false;
-let stageScrollCueTimeout = null;
-let stageScrollCueHandler = null;
-
 function getFilteredSections() {
   const rawQuery = searchQuery.trim();
   const terms = expandQueryTerms(rawQuery);
   const useFuzzy = terms.length > 0 && !FAQ_DATA.some((s) => s.items.some((item) => matchesTerms(item, terms)));
 
   return FAQ_DATA
-    .filter((s) => activeCategory === 'all' || s.id === activeCategory)
+    .filter((s) => rawQuery.length > 0 || s.id === activeCategory)
     .map((s) => {
       const items = s.items
         .filter((item) => !terms.length || matchesTerms(item, terms) || (useFuzzy && matchesFuzzy(item, rawQuery)))
@@ -171,124 +158,6 @@ function renderQuickLinks() {
     </a>
   `).join('');
 }
-
-function renderStageBlocks() {
-  stageBlocksEl.innerHTML = STAGE_BLOCKS.map((stage) => `
-    <button class="stage-block" data-id="${stage.id}" type="button">
-      <div class="stage-block__icon">${stage.icon}</div>
-      <div class="stage-block__title">${stage.title}</div>
-      <div class="stage-block__subtitle">${stage.subtitle}</div>
-    </button>
-  `).join('');
-  stageBlocksEl.querySelectorAll('.stage-block').forEach((btn) => {
-    btn.addEventListener('click', () => openStageModal(btn.dataset.id));
-  });
-}
-
-function openStageModal(stageId) {
-  const stage = STAGE_BLOCKS.find((s) => s.id === stageId);
-  if (!stage) return;
-
-  stageIconEl.textContent = stage.icon;
-  stageTitleEl.textContent = stage.title;
-  stageSubtitleEl.textContent = stage.subtitle;
-
-  const itemRefs = (stage.items || []).map(findFaqItemById).filter(Boolean);
-  const itemsHtml = itemRefs.map(({ item, catId }) => {
-    const stepsHtml = item.steps && item.steps.length
-      ? `<ol class="faq-item__steps">${item.steps.map((s) => `<li>${s}</li>`).join('')}</ol>`
-      : '';
-    return `
-    <div class="modal__bullet modal__bullet--link" data-id="${item.id}" data-cat="${catId}" role="button" tabindex="0">
-      <div class="modal__bullet-icon">❓</div>
-      <div class="modal__bullet-body">
-        <div class="modal__bullet-title">${item.q}</div>
-        <div class="modal__bullet-text">${item.a}</div>
-        ${stepsHtml}
-      </div>
-    </div>
-  `;
-  }).join('');
-
-  const noteHtml = stage.note ? `
-    <div class="modal__note">
-      <span class="modal__note-icon">💡</span>
-      <p class="modal__note-text">${stage.note}</p>
-    </div>
-  ` : '';
-
-  stageBodyEl.innerHTML = itemsHtml + noteHtml + '<div class="modal__spacer"></div>';
-
-  stageBodyEl.querySelectorAll('.modal__bullet--link').forEach((btn) => {
-    const activate = () => {
-      closeStageModal();
-      goToQuestion(btn.dataset.id, btn.dataset.cat);
-    };
-    btn.addEventListener('click', activate);
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        activate();
-      }
-    });
-  });
-
-  if (stage.cta) {
-    const ctaBtn = document.createElement('button');
-    ctaBtn.className = 'modal__cta';
-    ctaBtn.type = 'button';
-    ctaBtn.textContent = stage.cta.label + ' ↗';
-    ctaBtn.addEventListener('click', () => {
-      closeStageModal();
-      if (stage.cta.action === 'onboarding') openOnboarding();
-    });
-    stageBodyEl.insertBefore(ctaBtn, stageBodyEl.lastElementChild);
-  }
-
-  stageModalOpen = true;
-  stageOverlayEl.hidden = false;
-
-  resetStageScrollCue();
-  requestAnimationFrame(() => {
-    const isScrollable = stageBodyEl.scrollHeight > stageBodyEl.clientHeight + 4;
-    if (!isScrollable) return;
-    stageScrollCueEl.classList.add('is-visible');
-    stageScrollCueTimeout = setTimeout(() => {
-      stageScrollCueEl.classList.remove('is-visible');
-    }, 3500);
-    stageScrollCueHandler = () => {
-      stageScrollCueEl.classList.remove('is-visible');
-      clearTimeout(stageScrollCueTimeout);
-      stageBodyEl.removeEventListener('scroll', stageScrollCueHandler);
-      stageScrollCueHandler = null;
-    };
-    stageBodyEl.addEventListener('scroll', stageScrollCueHandler);
-  });
-}
-
-function resetStageScrollCue() {
-  if (stageScrollCueHandler) {
-    stageBodyEl.removeEventListener('scroll', stageScrollCueHandler);
-    stageScrollCueHandler = null;
-  }
-  if (stageScrollCueTimeout) {
-    clearTimeout(stageScrollCueTimeout);
-    stageScrollCueTimeout = null;
-  }
-  stageScrollCueEl.classList.remove('is-visible');
-}
-
-function closeStageModal() {
-  stageModalOpen = false;
-  stageOverlayEl.hidden = true;
-  resetStageScrollCue();
-}
-
-closeStageBtn.addEventListener('click', closeStageModal);
-
-stageOverlayEl.addEventListener('click', (e) => {
-  if (e.target === stageOverlayEl) closeStageModal();
-});
 
 function renderFaqItem(item) {
   const isOpen = openItemIds.has(item.id);
@@ -398,8 +267,6 @@ function goToQuestion(id, catId) {
 
 searchInput.addEventListener('input', (e) => {
   searchQuery = e.target.value;
-  activeCategory = 'all';
-
   renderPills();
   renderFaqArea();
 });
@@ -505,10 +372,6 @@ onboardingOverlayEl.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && stageModalOpen) {
-    closeStageModal();
-    return;
-  }
   if (e.key === 'Escape' && onboardingOpen) {
     closeOnboarding();
     return;
@@ -516,7 +379,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && document.activeElement === searchInput && searchQuery) {
     searchQuery = '';
     searchInput.value = '';
-    activeCategory = 'all';
     renderPills();
     renderFaqArea();
     return;
@@ -531,6 +393,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 renderQuickLinks();
-renderStageBlocks();
 renderPills();
 renderFaqArea();
