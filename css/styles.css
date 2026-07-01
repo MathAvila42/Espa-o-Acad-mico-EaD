@@ -163,7 +163,6 @@ main { padding-top: 89px; }
   padding: 22px 26px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(204, 162, 105, 0.25);
-  border-left: 4px solid #cca269;
   border-radius: 14px;
   cursor: pointer;
   font-family: inherit;
@@ -249,7 +248,8 @@ main { padding-top: 89px; }
 
 .quick-link:hover { background: rgba(255, 255, 255, 0.14); }
 
-.quick-link__icon { font-size: 20px; flex-shrink: 0; }
+.quick-link__icon { font-size: 20px; flex-shrink: 0; display: flex; align-items: center; }
+.quick-link__icon .material-symbols-outlined { font-size: 20px; }
 
 .quick-link__label {
   font-size: 14px;
@@ -294,6 +294,7 @@ main { padding-top: 89px; }
   border-color: #045a52;
   font-weight: 600;
 }
+.pill .material-symbols-outlined { font-size: 14px; }
 
 .result-count-wrap { margin-top: 14px; }
 
@@ -329,6 +330,7 @@ main { padding-top: 89px; }
   font-size: 18px;
   flex-shrink: 0;
 }
+.faq-category__icon .material-symbols-outlined { font-size: 18px; color: #045a52; }
 
 .faq-category__title {
   font-size: 17px;
@@ -395,6 +397,7 @@ main { padding-top: 89px; }
   letter-spacing: 0.3px;
   margin-bottom: 5px;
 }
+.faq-item__essential .material-symbols-outlined { font-size: 11px; }
 
 .faq-item__question {
   font-size: 14px;
@@ -579,6 +582,7 @@ main { padding-top: 89px; }
   font-size: 24px;
   flex-shrink: 0;
 }
+.modal__icon .material-symbols-outlined { font-size: 24px; color: #cca269; }
 
 .modal__step-label {
   color: rgba(255, 255, 255, 0.68);
@@ -632,6 +636,7 @@ main { padding-top: 89px; }
   font-size: 19px;
   flex-shrink: 0;
 }
+.modal__bullet-icon .material-symbols-outlined { font-size: 19px; color: #045a52; }
 
 .modal__bullet-body { flex: 1; min-width: 0; }
 
