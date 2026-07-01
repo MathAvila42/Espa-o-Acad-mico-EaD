@@ -1,7 +1,6 @@
 // FAQ content, categories and onboarding steps for the Central de Dúvidas EaD ULBRA page.
 
 const CATEGORIES = [
-  { id: 'all', icon: '◉', label: 'Todas' },
   { id: 'vida-academica', icon: '🎓', label: 'Vida Acadêmica' },
   { id: 'plataforma', icon: '💻', label: 'Plataforma' },
   { id: 'avaliacoes', icon: '📝', label: 'Avaliações' },
