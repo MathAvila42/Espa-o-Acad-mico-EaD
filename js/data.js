@@ -189,6 +189,17 @@ const SEARCH_SYNONYMS = [
   ['matricula', 'rematricula', 'inscricao'],
   ['nota', 'notas', 'media', 'aprovacao', 'pontuacao'],
   ['senha', 'login', 'esqueci a senha'],
+  ['polo', 'polo de apoio', 'presencial', 'apoio presencial', 'local de prova'],
+  ['email', 'e-mail', 'webmail', 'email institucional', 'comunicados'],
+  ['prova', 'provas', 'ap1', 'ap2', 'as', 'avaliacao semestral', 'atividade pratica'],
+  ['coordenador', 'coordenacao', 'professor', 'tutor', 'mediador', 'central de relacionamento', 'contato'],
+  ['disciplina', 'disciplinas', 'eletiva', 'eletivas', 'grade curricular', 'credito', 'creditos'],
+  ['tcc', 'formatura', 'diploma', 'colacao', 'atividades complementares', 'conclusao', 'concluir'],
+  ['enade', 'cpa', 'avaliacao docente', 'qualidade'],
+  ['intercambio', 'internacional', 'mobilidade'],
+  ['webaluno', 'web aluno', 'primeiro acesso', 'acesso', 'cpf'],
+  ['calendario', 'datas', 'prazo', 'prazos', 'semestre', 'periodo'],
+  ['portfolio', 'curriculo', 'estagio', 'carreira', 'mercado de trabalho'],
 ];
 
 const FAQ_DATA = [
