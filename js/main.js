@@ -134,7 +134,7 @@ function getFilteredSections() {
 function renderPills() {
   categoryPillsEl.innerHTML = CATEGORIES.map((cat) => `
     <button class="pill${cat.id === activeCategory ? ' is-active' : ''}" data-id="${cat.id}" type="button" aria-pressed="${cat.id === activeCategory}">
-      <span>${cat.icon}</span><span>${cat.label}</span>
+      <span class="material-symbols-outlined">${cat.icon}</span><span>${cat.label}</span>
     </button>
   `).join('');
   categoryPillsEl.querySelectorAll('.pill').forEach((btn) => {
@@ -152,7 +152,7 @@ function renderPills() {
 function renderQuickLinks() {
   quickLinksEl.innerHTML = QUICK_LINKS.map((link) => `
     <a class="quick-link" href="${link.href}">
-      <span class="quick-link__icon">${link.icon}</span>
+      <span class="quick-link__icon"><span class="material-symbols-outlined">${link.icon}</span></span>
       <span class="quick-link__label">${link.label}</span>
       <span class="quick-link__arrow">›</span>
     </a>
@@ -186,7 +186,7 @@ function renderFaqItem(item) {
     <div class="${classes.join(' ')}" id="${item.domId}">
       <button class="faq-item__toggle" data-id="${item.id}" type="button" aria-expanded="${isOpen}" aria-controls="${item.domId}-answer">
         <div class="faq-item__content">
-          ${item.essential ? '<div><span class="faq-item__essential">★ Essencial</span></div>' : ''}
+          ${item.essential ? '<div><span class="faq-item__essential"><span class="material-symbols-outlined">star</span> Essencial</span></div>' : ''}
           <span class="faq-item__question">${item.q}</span>
         </div>
         <span class="faq-item__chevron">›</span>
@@ -200,7 +200,7 @@ function renderFaqCategory(section) {
   return `
     <div class="faq-category">
       <div class="faq-category__header">
-        <span class="faq-category__icon">${section.icon}</span>
+        <span class="faq-category__icon"><span class="material-symbols-outlined">${section.icon}</span></span>
         <h2 class="faq-category__title">${section.label}</h2>
         <span class="faq-category__count">${section.items.length}</span>
       </div>
@@ -297,14 +297,14 @@ function renderOnboarding() {
   const step = ONBOARDING_STEPS[onboardingStep] || ONBOARDING_STEPS[0];
   const isLastStep = onboardingStep === stepCount - 1;
 
-  onboardingIconEl.textContent = step.icon;
+  onboardingIconEl.innerHTML = '<span class="material-symbols-outlined">' + step.icon + '</span>';
   onboardingStepLabelEl.textContent = `Passo ${onboardingStep + 1} de ${stepCount}`;
   onboardingTitleEl.textContent = step.title;
   onboardingProgressEl.style.width = Math.round(((onboardingStep + 1) / stepCount) * 100) + '%';
 
   const bulletsHtml = step.bullets.map((b) => `
     <div class="modal__bullet">
-      <div class="modal__bullet-icon">${b.icon}</div>
+      <div class="modal__bullet-icon"><span class="material-symbols-outlined">${b.icon}</span></div>
       <div class="modal__bullet-body">
         <div class="modal__bullet-title">${b.title}</div>
         <div class="modal__bullet-text">${b.text}</div>
