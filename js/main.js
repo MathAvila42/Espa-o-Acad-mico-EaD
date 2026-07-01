@@ -179,7 +179,7 @@ function renderFaqItem(item) {
     : '';
 
   const systemHtml = item.system
-    ? `<div class="faq-item__system"><span class="faq-item__system-icon">📍</span> Onde resolver: <strong>${item.system}</strong></div>`
+    ? `<div class="faq-item__system"><span class="faq-item__system-icon"><span class="material-symbols-outlined">location_on</span></span> Onde resolver: <strong>${item.system}</strong></div>`
     : '';
 
   return `
@@ -313,12 +313,12 @@ function renderOnboarding() {
   `).join('');
   const noteHtml = step.note ? `
     <div class="modal__note">
-      <span class="modal__note-icon">💡</span>
+      <span class="modal__note-icon"><span class="material-symbols-outlined">lightbulb</span></span>
       <p class="modal__note-text">${step.note}</p>
     </div>
   ` : '';
   const ctaHtml = step.cta ? `
-    <a class="modal__cta" href="${step.cta.href}" target="_blank" rel="noopener">${step.cta.label} ↗</a>
+    <a class="modal__cta" href="${step.cta.href}" target="_blank" rel="noopener">${step.cta.label} <span class="material-symbols-outlined">open_in_new</span></a>
   ` : '';
   onboardingBodyEl.innerHTML = bulletsHtml + noteHtml + ctaHtml + '<div class="modal__spacer"></div>';
 
@@ -333,7 +333,7 @@ function renderOnboarding() {
   });
 
   onboardingPrevBtn.hidden = onboardingStep === 0;
-  onboardingNextBtn.textContent = isLastStep ? 'Começar agora ✓' : 'Próximo →';
+  onboardingNextBtn.innerHTML = isLastStep ? 'Começar agora <span class="material-symbols-outlined">check</span>' : 'Próximo <span class="material-symbols-outlined">arrow_forward</span>';
 }
 
 function openOnboarding() {
