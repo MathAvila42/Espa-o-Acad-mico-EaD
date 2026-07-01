@@ -69,7 +69,12 @@ function fuzzyWordMatch(queryWord, text) {
 }
 
 function matchesTerms(item, terms) {
-  return terms.some((entry) => termMatchesText(entry, item.q) || termMatchesText(entry, item.a));
+  const stepsText = item.steps ? item.steps.join(' ') : '';
+  return terms.some((entry) =>
+    termMatchesText(entry, item.q) ||
+    termMatchesText(entry, item.a) ||
+    (stepsText && termMatchesText(entry, stepsText))
+  );
 }
 
 function matchesFuzzy(item, rawQuery) {
@@ -94,6 +99,8 @@ const faqSectionsEl = document.getElementById('faq-sections');
 const noResultsEl = document.getElementById('no-results');
 const quickLinksEl = document.getElementById('quick-links');
 
+const searchSuggestionsEl = document.getElementById('search-suggestions');
+
 const onboardingOverlayEl = document.getElementById('onboarding-overlay');
 const onboardingIconEl = document.getElementById('onboarding-icon');
 const onboardingStepLabelEl = document.getElementById('onboarding-step-label');
@@ -110,6 +117,52 @@ let searchQuery = '';
 let highlightedItem = null;
 let onboardingOpen = false;
 let onboardingStep = 0;
+let activeSuggestionIndex = -1;
+function hideSuggestions() {
+  searchSuggestionsEl.hidden = true;
+  activeSuggestionIndex = -1;
+}
+
+function renderSuggestions() {
+  const q = searchQuery.trim();
+  if (normalizeStr(q).length < 2) { hideSuggestions(); return; }
+
+  const sections = getFilteredSections();
+  const hits = [];
+  for (const s of sections) {
+    for (const item of s.items) {
+      hits.push({ item, catLabel: s.label, catId: s.id });
+      if (hits.length >= 6) break;
+    }
+    if (hits.length >= 6) break;
+  }
+
+  if (!hits.length) { hideSuggestions(); return; }
+
+  searchSuggestionsEl.innerHTML = hits.map(({ item, catLabel, catId }, i) => {
+    const qText = item.q.length > 80 ? item.q.slice(0, 80) + '…' : item.q;
+    return `<button class="search-suggestion" data-id="${item.id}" data-cat="${catId}" data-idx="${i}" type="button" tabindex="-1" role="option" aria-selected="false">
+      <span class="search-suggestion__q">${qText}</span>
+      <span class="search-suggestion__cat">${catLabel}</span>
+    </button>`;
+  }).join('');
+
+  searchSuggestionsEl.hidden = false;
+  activeSuggestionIndex = -1;
+
+  searchSuggestionsEl.querySelectorAll('.search-suggestion').forEach((btn) => {
+    btn.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      goToQuestion(btn.dataset.id, btn.dataset.cat);
+      searchInput.value = '';
+      searchQuery = '';
+      hideSuggestions();
+      renderPills();
+      renderFaqArea();
+    });
+  });
+}
+
 function getFilteredSections() {
   const rawQuery = searchQuery.trim();
   const terms = expandQueryTerms(rawQuery);
@@ -269,16 +322,60 @@ searchInput.addEventListener('input', (e) => {
   searchQuery = e.target.value;
   renderPills();
   renderFaqArea();
+  renderSuggestions();
+});
+
+searchInput.addEventListener('blur', () => {
+  setTimeout(hideSuggestions, 150);
+});
+
+searchInput.addEventListener('focus', () => {
+  if (searchQuery.trim().length >= 2) renderSuggestions();
 });
 
 searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    const btns = searchSuggestionsEl.querySelectorAll('.search-suggestion');
+    if (!btns.length) return;
+    activeSuggestionIndex = Math.min(activeSuggestionIndex + 1, btns.length - 1);
+    btns.forEach((b, i) => b.classList.toggle('is-active', i === activeSuggestionIndex));
+    return;
+  }
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    const btns = searchSuggestionsEl.querySelectorAll('.search-suggestion');
+    if (!btns.length) return;
+    activeSuggestionIndex = Math.max(activeSuggestionIndex - 1, -1);
+    btns.forEach((b, i) => b.classList.toggle('is-active', i === activeSuggestionIndex));
+    return;
+  }
+  if (e.key === 'Escape') {
+    if (!searchSuggestionsEl.hidden) { hideSuggestions(); return; }
+    return;
+  }
   if (e.key !== 'Enter') return;
+
+  if (activeSuggestionIndex >= 0 && !searchSuggestionsEl.hidden) {
+    const btn = searchSuggestionsEl.querySelectorAll('.search-suggestion')[activeSuggestionIndex];
+    if (btn) {
+      goToQuestion(btn.dataset.id, btn.dataset.cat);
+      searchInput.value = '';
+      searchQuery = '';
+      hideSuggestions();
+      renderPills();
+      renderFaqArea();
+      return;
+    }
+  }
+
   const sections = getFilteredSections();
   const firstItem = sections[0] && sections[0].items[0];
   if (!firstItem) return;
 
   openItemIds = new Set([firstItem.id]);
   highlightedItem = firstItem.id;
+  hideSuggestions();
   renderFaqArea();
 
   setTimeout(() => {
@@ -390,6 +487,10 @@ document.addEventListener('keydown', (e) => {
       searchInput.focus();
     }
   }
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search')) hideSuggestions();
 });
 
 renderQuickLinks();
